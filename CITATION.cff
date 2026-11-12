@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use these datasets, please cite them as below."
+type: dataset
+title: "Aptdot Developer Datasets"
+abstract: "Ten free JSON test datasets and fixtures for developers: HTTP security headers, RBAC users, MCP server configs, FHIR R4 patients, JWT claims and signed test tokens, CI/CD templates, an e-commerce catalog, IANA time zones, ISO country and currency codes, and design color tokens. Each file has a JSON Schema."
+authors:
+  - name: "Aptdot"
+    website: "https://www.aptdot.com/"
+version: "1.0.0"
+date-released: "2026-11-10"
+license: CC0-1.0
+url: "https://www.aptdot.com/datasets/"
+repository-code: "https://github.com/mkchd25/aptdot-datasets"
+keywords:
+  - dataset
+  - test-data
+  - json
+  - fixtures
+  - json-schema

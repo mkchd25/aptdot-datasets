@@ -1,0 +1,15 @@
+{
+  "name": "aptdot-datasets",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free JSON test datasets and fixtures from Aptdot, validated against JSON Schema.",
+  "type": "module",
+  "license": "CC0-1.0",
+  "scripts": {
+    "test": "node tests/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "8.20.0",
+    "ajv-formats": "3.0.1"
+  }
+}
