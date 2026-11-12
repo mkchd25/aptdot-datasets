@@ -1,0 +1,247 @@
+{
+  "$schema": "https://www.aptdot.com/data/v1/http-security-headers.schema.json",
+  "metadata": {
+    "name": "HTTP Security & Permissions Policy Headers Matrix",
+    "version": "1.1.2",
+    "generated_at": "2026-09-27T07:15:00.000Z",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "total_headers": 9,
+    "description": "Standardized baseline and hardened reference configurations for HTTP response headers across web applications, edge runtimes, and APIs."
+  },
+  "headers": [
+    {
+      "header": "Content-Security-Policy",
+      "category": "Cross-Site Scripting & Injection Mitigation",
+      "rfc_w3c_spec": "https://www.w3.org/TR/CSP3/",
+      "baseline_default": "default-src 'self';",
+      "recommended_production": "default-src 'self'; script-src 'self' 'strict-dynamic'; object-src 'none'; base-uri 'none'; frame-ancestors 'none';",
+      "risk_level": "Critical",
+      "app_targets": ["spa", "ssr", "monolith"],
+      "deprecated_alternatives": ["X-XSS-Protection", "X-Frame-Options (superseded by frame-ancestors)"],
+      "browser_compatibility": {
+        "chrome": "25+",
+        "firefox": "23+",
+        "safari": "7+",
+        "edge": "12+"
+      },
+      "common_pitfalls": "Using 'strict-dynamic' requires supplying a per-request cryptographic nonce or hash to script tags; otherwise, legitimate inline scripts fail with 'Refused to load'. If enabling CSP violation reporting, avoid the deprecated 'report-uri' directive; instead use 'report-to <endpoint-name>;' paired with the modern HTTP response header 'Reporting-Endpoints: <endpoint-name>=\"https://example.com/csp-reports\"'.",
+      "snippets": {
+        "nginx": "add_header Content-Security-Policy \"default-src 'self'; frame-ancestors 'none';\" always;",
+        "apache": "Header always set Content-Security-Policy \"default-src 'self'; frame-ancestors 'none';\"",
+        "next_js": "{ key: 'Content-Security-Policy', value: \"default-src 'self'; frame-ancestors 'none';\" }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Content-Security-Policy\", \"value\": \"default-src 'self'; frame-ancestors 'none';\" } ] }",
+        "netlify": "/*\n  Content-Security-Policy: default-src 'self'; frame-ancestors 'none';",
+        "caddy": "header Content-Security-Policy \"default-src 'self'; frame-ancestors 'none';\"",
+        "helmet": "helmet({ contentSecurityPolicy: { directives: { defaultSrc: [\"'self'\"], frameAncestors: [\"'none'\"] } } })"
+      }
+    },
+    {
+      "header": "Strict-Transport-Security",
+      "category": "Transport Layer & Protocol Security",
+      "rfc_w3c_spec": "https://datatracker.ietf.org/doc/html/rfc6797",
+      "baseline_default": "max-age=31536000",
+      "recommended_production": "max-age=63072000; includeSubDomains; preload",
+      "risk_level": "High",
+      "app_targets": ["spa", "ssr", "api-only", "microservice"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "4+",
+        "firefox": "4+",
+        "safari": "7+",
+        "edge": "12+"
+      },
+      "common_pitfalls": "Submitting a domain to the HSTS preload list is effectively permanent; if any staging or internal subdomain lacks HTTPS, it will become inaccessible across major browsers.",
+      "snippets": {
+        "nginx": "add_header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\" always;",
+        "apache": "Header always set Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"",
+        "next_js": "{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Strict-Transport-Security\", \"value\": \"max-age=63072000; includeSubDomains; preload\" } ] }",
+        "netlify": "/*\n  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload",
+        "caddy": "header Strict-Transport-Security \"max-age=63072000; includeSubDomains; preload\"",
+        "helmet": "helmet.hsts({ maxAge: 63072000, includeSubDomains: true, preload: true })"
+      }
+    },
+    {
+      "header": "Permissions-Policy",
+      "category": "Browser Hardware & Feature Isolation",
+      "rfc_w3c_spec": "https://www.w3.org/TR/permissions-policy-1/",
+      "baseline_default": "camera=(), microphone=(), geolocation=()",
+      "recommended_production": "camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(), usb=()",
+      "risk_level": "Medium",
+      "app_targets": ["spa", "ssr", "monolith"],
+      "deprecated_alternatives": ["Feature-Policy"],
+      "browser_compatibility": {
+        "chrome": "88+",
+        "edge": "88+",
+        "firefox": "not supported (header; supports iframe allow attribute only)",
+        "safari": "not supported (header; supports iframe allow attribute only)"
+      },
+      "common_pitfalls": "Permissions-Policy is enforced via response headers in Chromium browsers only; Firefox and Safari require the HTML 'allow' attribute directly on <iframe> tags.",
+      "snippets": {
+        "nginx": "add_header Permissions-Policy \"camera=(), microphone=(), geolocation=()\" always;",
+        "apache": "Header always set Permissions-Policy \"camera=(), microphone=(), geolocation=()\"",
+        "next_js": "{ key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Permissions-Policy\", \"value\": \"camera=(), microphone=(), geolocation=()\" } ] }",
+        "netlify": "/*\n  Permissions-Policy: camera=(), microphone=(), geolocation=()",
+        "caddy": "header Permissions-Policy \"camera=(), microphone=(), geolocation=()\"",
+        "helmet": "app.use((req, res, next) => { res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()'); next(); })"
+      }
+    },
+    {
+      "header": "X-Content-Type-Options",
+      "category": "MIME-Type Sniffing Mitigation",
+      "rfc_w3c_spec": "https://fetch.spec.whatwg.org/#x-content-type-options-header",
+      "baseline_default": "nosniff",
+      "recommended_production": "nosniff",
+      "risk_level": "Medium",
+      "app_targets": ["spa", "ssr", "api-only", "microservice"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "1+",
+        "firefox": "50+",
+        "safari": "6+",
+        "edge": "12+"
+      },
+      "common_pitfalls": "If your web server serves stylesheets or JavaScript files with missing or incorrect Content-Type headers (e.g., text/plain), modern browsers will refuse to execute them.",
+      "snippets": {
+        "nginx": "add_header X-Content-Type-Options \"nosniff\" always;",
+        "apache": "Header always set X-Content-Type-Options \"nosniff\"",
+        "next_js": "{ key: 'X-Content-Type-Options', value: 'nosniff' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"X-Content-Type-Options\", \"value\": \"nosniff\" } ] }",
+        "netlify": "/*\n  X-Content-Type-Options: nosniff",
+        "caddy": "header X-Content-Type-Options \"nosniff\"",
+        "helmet": "helmet.noSniff()"
+      }
+    },
+    {
+      "header": "X-Frame-Options",
+      "category": "Legacy Clickjacking Mitigation",
+      "rfc_w3c_spec": "https://datatracker.ietf.org/doc/html/rfc7034",
+      "baseline_default": "SAMEORIGIN",
+      "recommended_production": "DENY",
+      "risk_level": "Medium",
+      "app_targets": ["spa", "ssr", "monolith"],
+      "deprecated_alternatives": ["Superseded by CSP: frame-ancestors"],
+      "browser_compatibility": {
+        "chrome": "1+",
+        "firefox": "3.6+",
+        "safari": "4+",
+        "edge": "12+"
+      },
+      "common_pitfalls": "Setting X-Frame-Options to ALLOW-FROM is obsolete and ignored by modern browsers. Use Content-Security-Policy: frame-ancestors https://trusted.example.com instead.",
+      "snippets": {
+        "nginx": "add_header X-Frame-Options \"DENY\" always;",
+        "apache": "Header always set X-Frame-Options \"DENY\"",
+        "next_js": "{ key: 'X-Frame-Options', value: 'DENY' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"X-Frame-Options\", \"value\": \"DENY\" } ] }",
+        "netlify": "/*\n  X-Frame-Options: DENY",
+        "caddy": "header X-Frame-Options \"DENY\"",
+        "helmet": "helmet.frameguard({ action: 'deny' })"
+      }
+    },
+    {
+      "header": "Referrer-Policy",
+      "category": "Privacy & Tracking Leakage Prevention",
+      "rfc_w3c_spec": "https://www.w3.org/TR/referrer-policy/",
+      "baseline_default": "strict-origin-when-cross-origin",
+      "recommended_production": "strict-origin-when-cross-origin",
+      "risk_level": "Low",
+      "app_targets": ["spa", "ssr", "monolith", "api-only"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "61+",
+        "firefox": "52+",
+        "safari": "14+",
+        "edge": "79+"
+      },
+      "common_pitfalls": "Avoid using 'no-referrer-when-downgrade' or 'unsafe-url', as these leak complete path parameters and query strings to third-party tracking services.",
+      "snippets": {
+        "nginx": "add_header Referrer-Policy \"strict-origin-when-cross-origin\" always;",
+        "apache": "Header always set Referrer-Policy \"strict-origin-when-cross-origin\"",
+        "next_js": "{ key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Referrer-Policy\", \"value\": \"strict-origin-when-cross-origin\" } ] }",
+        "netlify": "/*\n  Referrer-Policy: strict-origin-when-cross-origin",
+        "caddy": "header Referrer-Policy \"strict-origin-when-cross-origin\"",
+        "helmet": "helmet.referrerPolicy({ policy: 'strict-origin-when-cross-origin' })"
+      }
+    },
+    {
+      "header": "Cross-Origin-Opener-Policy",
+      "category": "Process Isolation & Spectre Attack Mitigation",
+      "rfc_w3c_spec": "https://html.spec.whatwg.org/multipage/browsers.html#cross-origin-opener-policies",
+      "baseline_default": "same-origin-allow-popups",
+      "recommended_production": "same-origin",
+      "risk_level": "High",
+      "app_targets": ["spa", "ssr"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "83+",
+        "firefox": "79+",
+        "safari": "15.2+",
+        "edge": "83+"
+      },
+      "common_pitfalls": "Enabling 'same-origin' severs window.opener cross-origin references, which will break third-party OAuth popup workflows unless configured with 'same-origin-allow-popups'.",
+      "snippets": {
+        "nginx": "add_header Cross-Origin-Opener-Policy \"same-origin\" always;",
+        "apache": "Header always set Cross-Origin-Opener-Policy \"same-origin\"",
+        "next_js": "{ key: 'Cross-Origin-Opener-Policy', value: 'same-origin' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Cross-Origin-Opener-Policy\", \"value\": \"same-origin\" } ] }",
+        "netlify": "/*\n  Cross-Origin-Opener-Policy: same-origin",
+        "caddy": "header Cross-Origin-Opener-Policy \"same-origin\"",
+        "helmet": "helmet.crossOriginOpenerPolicy({ policy: 'same-origin' })"
+      }
+    },
+    {
+      "header": "Cross-Origin-Embedder-Policy",
+      "category": "Process Isolation & Spectre Attack Mitigation",
+      "rfc_w3c_spec": "https://html.spec.whatwg.org/multipage/browsers.html#cross-origin-embedder-policy",
+      "baseline_default": "unsafe-none",
+      "recommended_production": "require-corp",
+      "risk_level": "High",
+      "app_targets": ["spa", "ssr"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "83+",
+        "firefox": "79+",
+        "safari": "15.2+",
+        "edge": "83+"
+      },
+      "common_pitfalls": "Setting 'require-corp' blocks all third-party subresources (images, scripts, fonts) that do not explicitly return a Cross-Origin-Resource-Policy (CORP) header. Use 'credentialless' if external assets lack CORP support.",
+      "snippets": {
+        "nginx": "add_header Cross-Origin-Embedder-Policy \"require-corp\" always;",
+        "apache": "Header always set Cross-Origin-Embedder-Policy \"require-corp\"",
+        "next_js": "{ key: 'Cross-Origin-Embedder-Policy', value: 'require-corp' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Cross-Origin-Embedder-Policy\", \"value\": \"require-corp\" } ] }",
+        "netlify": "/*\n  Cross-Origin-Embedder-Policy: require-corp",
+        "caddy": "header Cross-Origin-Embedder-Policy \"require-corp\"",
+        "helmet": "helmet.crossOriginEmbedderPolicy({ policy: 'require-corp' })"
+      }
+    },
+    {
+      "header": "Cross-Origin-Resource-Policy",
+      "category": "Cross-Origin Asset Leakage Defense",
+      "rfc_w3c_spec": "https://fetch.spec.whatwg.org/#cross-origin-resource-policy-header",
+      "baseline_default": "same-site",
+      "recommended_production": "same-origin",
+      "risk_level": "Medium",
+      "app_targets": ["spa", "ssr", "api-only"],
+      "deprecated_alternatives": [],
+      "browser_compatibility": {
+        "chrome": "73+",
+        "firefox": "74+",
+        "safari": "12+",
+        "edge": "79+"
+      },
+      "common_pitfalls": "Applying 'same-origin' to public static CDN assets (like public logos or open icons) will cause cross-origin websites and client frontends to fail fetching them.",
+      "snippets": {
+        "nginx": "add_header Cross-Origin-Resource-Policy \"same-origin\" always;",
+        "apache": "Header always set Cross-Origin-Resource-Policy \"same-origin\"",
+        "next_js": "{ key: 'Cross-Origin-Resource-Policy', value: 'same-origin' }",
+        "vercel": "{ \"source\": \"/(.*)\", \"headers\": [ { \"key\": \"Cross-Origin-Resource-Policy\", \"value\": \"same-origin\" } ] }",
+        "netlify": "/*\n  Cross-Origin-Resource-Policy: same-origin",
+        "caddy": "header Cross-Origin-Resource-Policy \"same-origin\"",
+        "helmet": "helmet.crossOriginResourcePolicy({ policy: 'same-origin' })"
+      }
+    }
+  ]
+}

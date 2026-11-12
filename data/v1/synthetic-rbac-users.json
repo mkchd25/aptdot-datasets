@@ -1,0 +1,968 @@
+{
+  "$schema": "https://www.aptdot.com/data/v1/synthetic-rbac-users.schema.json",
+  "metadata": {
+    "name": "Synthetic RBAC & User Permission Matrix",
+    "version": "1.0.3",
+    "reference_time": "2026-09-28T00:00:00Z",
+    "generated_at": "2026-09-29T11:45:00.000Z",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "permission_grammar": "domain:resource:action",
+    "wildcard_rules": {
+      "*": "Matches any single segment (e.g., data:records:* matches read, write, and export on records)",
+      "*:*:*": "Full administrative super-wildcard bypass"
+    },
+    "resolution_precedence": [
+      "0. If resource.org_id is non-null and does not equal principal.org_id, deny all actions (cross-tenant isolation).",
+      "1. If mfa.enforced is true and mfa.enrolled is false, deny all actions regardless of effective_permissions.",
+      "2. If status is 'suspended' or 'pending_invite', deny all actions regardless of effective_permissions.",
+      "3. If access_expires_at is non-null and earlier than reference_time, deny all actions regardless of effective_permissions.",
+      "4. If last_login_at is non-null and more than dormancy_threshold_days before reference_time, deny all actions regardless of effective_permissions.",
+      "5. Within workspace scope, workspace_roles overrides org_role for that workspace only.",
+      "6. denied_permissions always overrides effective_permissions, even for wildcard (*:*:*) grants.",
+      "7. If the requested action and an existing granted action appear together in separation_of_duty_conflicts, deny the requested action.",
+      "8. Otherwise, allow if the action matches an entry in effective_permissions (exact match or wildcard segment match)."
+    ],
+    "dormancy_threshold_days": 90,
+    "separation_of_duty_conflicts": [
+      ["finance:requests:create", "finance:requests:approve"]
+    ],
+    "total_users": 25,
+    "total_roles": 6,
+    "total_resources": 8,
+    "total_test_cases": 12,
+    "description": "Production-grade synthetic authorization test suite featuring multi-tenant RBAC identities, resource catalogs, and deterministic authorization test oracles."
+  },
+  "roles": [
+    {
+      "role": "super_admin",
+      "inherits": ["workspace_editor", "billing_manager", "compliance_auditor"],
+      "permissions": ["*:*:*"],
+      "description": "Global administrator with unrestricted operational and administrative access."
+    },
+    {
+      "role": "workspace_editor",
+      "inherits": ["member"],
+      "permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read"
+      ],
+      "description": "Operational read/write access to workspace data and settings."
+    },
+    {
+      "role": "compliance_auditor",
+      "inherits": ["member"],
+      "permissions": [
+        "audit:events:read",
+        "compliance:reports:export",
+        "data:records:read"
+      ],
+      "description": "Read-only access across compliance telemetry and system audit logs."
+    },
+    {
+      "role": "billing_manager",
+      "inherits": ["member"],
+      "permissions": [
+        "org:billing:read",
+        "org:billing:write",
+        "org:invoices:export"
+      ],
+      "description": "Financial and subscription management authority."
+    },
+    {
+      "role": "member",
+      "inherits": [],
+      "permissions": [
+        "team:members:read",
+        "data:records:read"
+      ],
+      "description": "Baseline collaborator role with read access to shared resources."
+    },
+    {
+      "role": "guest",
+      "inherits": [],
+      "permissions": [
+        "data:records:read"
+      ],
+      "description": "Least-privilege external participant."
+    }
+  ],
+  "resources": [
+    {
+      "id": "res_rec_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": "ws_prod_eu",
+      "type": "data:records",
+      "owner_id": "usr_003",
+      "sensitivity": "confidential",
+      "data_residency": "EU"
+    },
+    {
+      "id": "res_rec_002",
+      "org_id": "org_enterprise_01",
+      "workspace_id": "ws_staging",
+      "type": "data:records",
+      "owner_id": "usr_004",
+      "sensitivity": "internal",
+      "data_residency": "US"
+    },
+    {
+      "id": "res_rec_003",
+      "org_id": "org_enterprise_02",
+      "workspace_id": "ws_client_us",
+      "type": "data:records",
+      "owner_id": "usr_022",
+      "sensitivity": "confidential",
+      "data_residency": "US"
+    },
+    {
+      "id": "res_bill_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": null,
+      "type": "org:billing",
+      "owner_id": "usr_005",
+      "sensitivity": "restricted",
+      "data_residency": "US"
+    },
+    {
+      "id": "res_audit_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": null,
+      "type": "audit:events",
+      "owner_id": "system",
+      "sensitivity": "restricted",
+      "data_residency": "EU"
+    },
+    {
+      "id": "res_sec_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": null,
+      "type": "security:settings",
+      "owner_id": "usr_001",
+      "sensitivity": "critical",
+      "data_residency": "EU"
+    },
+    {
+      "id": "res_fin_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": null,
+      "type": "finance:requests",
+      "owner_id": "usr_005",
+      "sensitivity": "restricted",
+      "data_residency": "US"
+    },
+    {
+      "id": "res_infra_001",
+      "org_id": "org_enterprise_01",
+      "workspace_id": "ws_staging",
+      "type": "infra:runners",
+      "owner_id": "svc_024",
+      "sensitivity": "internal",
+      "data_residency": "US"
+    }
+  ],
+  "users": [
+    {
+      "id": "usr_001",
+      "uuid": "7a3f4e2b-8c1d-4a9f-9e6b-5c0d2f7e9a01",
+      "email": "alex.admin@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "super_admin",
+      "workspace_roles": {},
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-27T18:40:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "hardware_key" },
+      "attributes": {
+        "department": "Security",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 0
+      },
+      "scenario_id": "baseline_super_admin"
+    },
+    {
+      "id": "usr_002",
+      "uuid": "8b4a5f3c-9d2e-4b0a-8f7c-6d1e3a8f0b02",
+      "email": "sarah.lead@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "workspace_editor",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor", "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T07:15:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 5
+      },
+      "scenario_id": "baseline_engineering_lead"
+    },
+    {
+      "id": "usr_003",
+      "uuid": "9c5b6a4d-0e3f-4c1b-b08d-7e2f4b9a1c03",
+      "email": "marcus.dev@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor", "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-27T14:20:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 10
+      },
+      "scenario_id": "baseline_senior_developer"
+    },
+    {
+      "id": "usr_004",
+      "uuid": "0d6c7b5e-1f4a-4d2c-819e-8f3a5c0b2d04",
+      "email": "elena.qa@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "guest", "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T06:50:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Quality Assurance",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "vpn",
+        "device_posture": "managed_compliant",
+        "risk_score": 8
+      },
+      "scenario_id": "baseline_qa_engineer"
+    },
+    {
+      "id": "usr_005",
+      "uuid": "1e7d8c6f-2a5b-4e3d-920f-9a4b6d1c3e05",
+      "email": "claire.billing@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "billing_manager",
+      "workspace_roles": {},
+      "effective_permissions": [
+        "org:billing:read",
+        "org:billing:write",
+        "org:invoices:export",
+        "team:members:read",
+        "data:records:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-26T16:10:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Finance",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 5
+      },
+      "scenario_id": "baseline_billing_manager"
+    },
+    {
+      "id": "usr_006",
+      "uuid": "2f8e9d7a-3b6c-4f4e-a31a-0b5c7e2d4f06",
+      "email": "victor.audit@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "compliance_auditor",
+      "workspace_roles": {},
+      "effective_permissions": [
+        "audit:events:read",
+        "compliance:reports:export",
+        "data:records:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-27T10:05:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "hardware_key" },
+      "attributes": {
+        "department": "Compliance",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 2
+      },
+      "scenario_id": "baseline_compliance_auditor"
+    },
+    {
+      "id": "usr_007",
+      "uuid": "3a9f0e8b-4c7d-4a5f-842b-1c6d8f3e5a07",
+      "email": "maya.ops@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor", "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T05:30:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Operations",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 5
+      },
+      "scenario_id": "baseline_site_reliability"
+    },
+    {
+      "id": "usr_008",
+      "uuid": "4b0a1f9c-5d8e-4b6a-853c-2d7e9a4f6b08",
+      "email": "liam.support@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "guest", "ws_staging": "guest" },
+      "effective_permissions": [
+        "data:records:read",
+        "team:members:read"
+      ],
+      "denied_permissions": ["data:records:export", "data:records:write"],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T04:45:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Customer Support",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "vpn",
+        "device_posture": "managed_compliant",
+        "risk_score": 12
+      },
+      "scenario_id": "baseline_support_agent"
+    },
+    {
+      "id": "usr_009",
+      "uuid": "5c1b2a0d-6e9f-4c7b-864d-3e8f0b5a7c09",
+      "email": "olivia.product@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "workspace_editor",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor", "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-27T11:20:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Product",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 5
+      },
+      "scenario_id": "baseline_product_manager"
+    },
+    {
+      "id": "usr_010",
+      "uuid": "6d2c3b1e-7f0a-4d8c-875e-4f9a1c6b8d10",
+      "email": "noah.data@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:export",
+        "team:members:read"
+      ],
+      "denied_permissions": ["data:records:write"],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-26T17:00:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Analytics",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 10
+      },
+      "scenario_id": "baseline_data_analyst"
+    },
+    {
+      "id": "usr_011",
+      "uuid": "7e3d4c2f-8a1b-4e9d-886f-5a0b2d7c9e11",
+      "email": "emma.design@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "guest", "ws_staging": "guest" },
+      "effective_permissions": [
+        "data:records:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-25T13:40:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Design",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 5
+      },
+      "scenario_id": "baseline_ui_designer"
+    },
+    {
+      "id": "usr_012",
+      "uuid": "8f4e5d3a-9b2c-4f0e-897a-6b1c3e8d0f12",
+      "email": "hannah.legal@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "compliance_auditor",
+      "workspace_roles": {},
+      "effective_permissions": [
+        "audit:events:read",
+        "compliance:reports:export",
+        "data:records:read",
+        "team:members:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-24T09:30:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "hardware_key" },
+      "attributes": {
+        "department": "Legal",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 0
+      },
+      "scenario_id": "baseline_legal_counsel"
+    },
+    {
+      "id": "usr_013",
+      "uuid": "9a5f6e4b-0c3d-4a1f-808b-7c2d4f9e1a13",
+      "email": "external.partner@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "guest",
+      "workspace_roles": { "ws_staging": "guest" },
+      "effective_permissions": ["data:records:read"],
+      "denied_permissions": ["data:records:write", "data:records:export", "team:members:read"],
+      "status": "active",
+      "employment_type": "contractor",
+      "access_expires_at": "2026-12-31T23:59:59Z",
+      "last_login_at": "2026-09-27T08:15:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "External Partner",
+        "geo_region": "US-East",
+        "ip_cidr": "203.0.113.0/24",
+        "network_trust": "public",
+        "device_posture": "byod_unmanaged",
+        "risk_score": 25
+      },
+      "scenario_id": "baseline_active_partner"
+    },
+    {
+      "id": "usr_014",
+      "uuid": "3f2b8c1e-9d4a-4e7b-8a61-5c0d2f7e9b14",
+      "email": "contractor.dev@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor", "ws_staging": "guest" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export",
+        "workspace:settings:read"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "contractor",
+      "access_expires_at": "2026-08-31T00:00:00Z",
+      "last_login_at": "2026-08-25T11:20:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "203.0.113.0/24",
+        "network_trust": "vpn",
+        "device_posture": "byod_unmanaged",
+        "risk_score": 45
+      },
+      "scenario_id": "scenario_expired_contractor"
+    },
+    {
+      "id": "usr_015",
+      "uuid": "6b9e2c4a-1f8d-4b7a-8a3e-4d0f2a7b9c15",
+      "email": "auditor.sod@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "compliance_auditor",
+      "workspace_roles": {},
+      "effective_permissions": [
+        "audit:events:read",
+        "compliance:reports:export",
+        "finance:requests:create",
+        "finance:requests:approve"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-26T09:15:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Finance",
+        "geo_region": "US-East",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 60
+      },
+      "scenario_id": "scenario_separation_of_duty_conflict"
+    },
+    {
+      "id": "usr_016",
+      "uuid": "4c0b2d8e-6a1f-4e9b-8c3d-2b1f4a8e0c16",
+      "email": "unprotected.admin@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "super_admin",
+      "workspace_roles": {},
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T02:00:00Z",
+      "mfa": { "enforced": true, "enrolled": false, "method": "none" },
+      "attributes": {
+        "department": "Infrastructure",
+        "geo_region": "US-East",
+        "ip_cidr": "203.0.113.0/24",
+        "network_trust": "public",
+        "device_posture": "byod_unmanaged",
+        "risk_score": 85
+      },
+      "scenario_id": "scenario_mfa_non_compliant_admin"
+    },
+    {
+      "id": "usr_017",
+      "uuid": "5d1c3e9f-7b2a-4f0c-8d4e-3c2a5b9f1d17",
+      "email": "rogue.leaver@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "workspace_editor",
+      "workspace_roles": { "ws_prod_eu": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write",
+        "data:records:export"
+      ],
+      "denied_permissions": [],
+      "status": "suspended",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-27T23:45:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "session_override": {
+        "unrevoked_token_id": "tok_synthetic_active_leaver_session_jwt",
+        "session_expires_at": "2026-10-15T00:00:00Z"
+      },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "203.0.113.0/24",
+        "network_trust": "public",
+        "device_posture": "byod_unmanaged",
+        "risk_score": 95
+      },
+      "scenario_id": "scenario_suspended_user_active_session"
+    },
+    {
+      "id": "usr_018",
+      "uuid": "9d4a1c7e-3b8f-4e6a-8c2d-1a0e5b7f9d18",
+      "email": "restricted.admin@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "super_admin",
+      "workspace_roles": { "ws_prod_eu": "guest" },
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": ["data:records:export", "data:records:write"],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T07:10:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "hardware_key" },
+      "attributes": {
+        "department": "Operations",
+        "geo_region": "EU-Central",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 10
+      },
+      "scenario_id": "scenario_restricting_workspace_override"
+    },
+    {
+      "id": "usr_019",
+      "uuid": "7f3e5b1a-9d4c-4a2e-8f6a-5e4c7d1b3f19",
+      "email": "dormant.admin@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "super_admin",
+      "workspace_roles": {},
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-05-10T08:00:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Security",
+        "geo_region": "US-East",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 75
+      },
+      "scenario_id": "scenario_dormant_high_privilege_account"
+    },
+    {
+      "id": "usr_020",
+      "uuid": "8a4f6c2b-0e5d-4b3f-807b-6f5d8e2c4a20",
+      "email": "breakglass.oncall@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "super_admin" },
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": "2026-09-27T20:00:00Z",
+      "last_login_at": "2026-09-27T19:30:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "hardware_key" },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 30
+      },
+      "scenario_id": "scenario_jit_elevation_expired"
+    },
+    {
+      "id": "usr_021",
+      "uuid": "9b5a7d3c-1f6e-4c4a-818c-7a6e9f3d5b21",
+      "email": "customer.victim@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "member" },
+      "effective_permissions": ["data:records:read"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T07:45:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "impersonation": {
+        "is_impersonated": true,
+        "impersonated_by": "usr_001",
+        "impersonation_reason": "ticket_audit_investigation"
+      },
+      "attributes": {
+        "department": "Operations",
+        "geo_region": "EU-Central",
+        "ip_cidr": "198.51.100.0/24",
+        "network_trust": "corporate",
+        "device_posture": "managed_compliant",
+        "risk_score": 20
+      },
+      "scenario_id": "scenario_impersonation_session"
+    },
+    {
+      "id": "usr_022",
+      "uuid": "0c6b8e4d-2a7f-4d5b-829d-8b7f0a4e6c22",
+      "email": "twin.consultant@example.com",
+      "org_id": "org_enterprise_02",
+      "org_role": "member",
+      "workspace_roles": { "ws_client_us": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write"
+      ],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "contractor",
+      "access_expires_at": "2026-11-30T00:00:00Z",
+      "last_login_at": "2026-09-27T16:00:00Z",
+      "mfa": { "enforced": true, "enrolled": true, "method": "totp" },
+      "attributes": {
+        "department": "Consulting",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "vpn",
+        "device_posture": "managed_compliant",
+        "risk_score": 15
+      },
+      "scenario_id": "scenario_cross_tenant_identity"
+    },
+    {
+      "id": "usr_023",
+      "uuid": "1d7c9f5e-3b8a-4e6c-830e-9c8a1b5f7d23",
+      "email": "pending.hire@example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "member",
+      "workspace_roles": { "ws_prod_eu": "member" },
+      "effective_permissions": [],
+      "denied_permissions": ["*:*:*"],
+      "status": "pending_invite",
+      "employment_type": "full_time",
+      "access_expires_at": null,
+      "last_login_at": null,
+      "mfa": { "enforced": true, "enrolled": false, "method": "none" },
+      "attributes": {
+        "department": "Engineering",
+        "geo_region": "EU-Central",
+        "ip_cidr": "203.0.113.0/24",
+        "network_trust": "public",
+        "device_posture": "byod_unmanaged",
+        "risk_score": 50
+      },
+      "scenario_id": "scenario_pending_invite_unactivated"
+    },
+    {
+      "id": "svc_024",
+      "uuid": "1e8d4a9f-5c0b-4e7a-8a61-7a3f4e2b8c24",
+      "email": "ci-runner@serviceaccount.example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "workspace_editor",
+      "workspace_roles": { "ws_staging": "workspace_editor" },
+      "effective_permissions": [
+        "data:records:read",
+        "data:records:write"
+      ],
+      "denied_permissions": ["infra:runners:delete"],
+      "status": "active",
+      "employment_type": "service_account",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T06:00:00Z",
+      "mfa": { "enforced": false, "enrolled": false, "method": "none" },
+      "service_account_credentials": {
+        "client_id": "sa_ci_runner_prod",
+        "client_secret_ref": "vault://secrets/ci-runner/staging-key"
+      },
+      "attributes": {
+        "department": "DevOps",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "server_hardened",
+        "risk_score": 5
+      },
+      "scenario_id": "scenario_machine_service_account"
+    },
+    {
+      "id": "svc_025",
+      "uuid": "2f9e5b0a-6d1c-4f8b-8b72-8b4a5f3c9d25",
+      "email": "legacy-sync@serviceaccount.example.com",
+      "org_id": "org_enterprise_01",
+      "org_role": "super_admin",
+      "workspace_roles": {},
+      "effective_permissions": ["*:*:*"],
+      "denied_permissions": [],
+      "status": "active",
+      "employment_type": "service_account",
+      "access_expires_at": null,
+      "last_login_at": "2026-09-28T01:10:00Z",
+      "mfa": { "enforced": false, "enrolled": false, "method": "none" },
+      "service_account_credentials": {
+        "client_id": "sa_legacy_sync_orphaned",
+        "client_secret_ref": "vault://secrets/sync/legacy-unrotated"
+      },
+      "attributes": {
+        "department": "IT",
+        "geo_region": "US-East",
+        "ip_cidr": "192.0.2.0/24",
+        "network_trust": "corporate",
+        "device_posture": "server_hardened",
+        "risk_score": 70
+      },
+      "scenario_id": "scenario_overprivileged_service_account"
+    }
+  ],
+  "authorization_test_cases": [
+    {
+      "case_id": "tc_001",
+      "description": "Global super admin performing unrestricted record read",
+      "principal": "usr_001",
+      "action": "data:records:read",
+      "resource": "res_rec_001",
+      "expected": "allow",
+      "reason": "principal_has_super_admin_wildcard"
+    },
+    {
+      "case_id": "tc_002",
+      "description": "Baseline editor writing to authorized production workspace",
+      "principal": "usr_002",
+      "action": "data:records:write",
+      "resource": "res_rec_001",
+      "expected": "allow",
+      "reason": "workspace_editor_role_allows_write"
+    },
+    {
+      "case_id": "tc_003",
+      "description": "Expired contractor attempting export on production workspace",
+      "principal": "usr_014",
+      "action": "data:records:export",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "principal_temporal_access_expired"
+    },
+    {
+      "case_id": "tc_004",
+      "description": "Separation-of-Duty conflict detection during approval action",
+      "principal": "usr_015",
+      "action": "finance:requests:approve",
+      "resource": "res_fin_001",
+      "expected": "deny",
+      "reason": "separation_of_duty_policy_violation"
+    },
+    {
+      "case_id": "tc_005",
+      "description": "MFA non-compliant administrator accessing critical security settings",
+      "principal": "usr_016",
+      "action": "security:settings:write",
+      "resource": "res_sec_001",
+      "expected": "deny",
+      "reason": "mfa_enforcement_required_for_administrative_actions"
+    },
+    {
+      "case_id": "tc_006",
+      "description": "Suspended user with active JWT session attempting record read",
+      "principal": "usr_017",
+      "action": "data:records:read",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "account_suspended_session_must_be_revoked"
+    },
+    {
+      "case_id": "tc_007",
+      "description": "Restricting workspace override demoting global admin to guest",
+      "principal": "usr_018",
+      "action": "data:records:write",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "workspace_demotion_override_and_explicit_deny"
+    },
+    {
+      "case_id": "tc_008",
+      "description": "Dormant administrator accessing audit telemetry after 90 days of inactivity",
+      "principal": "usr_019",
+      "action": "audit:events:read",
+      "resource": "res_audit_001",
+      "expected": "deny",
+      "reason": "dormant_account_policy_requires_reauthorization"
+    },
+    {
+      "case_id": "tc_009",
+      "description": "Expired JIT break-glass elevation attempting administrative bypass",
+      "principal": "usr_020",
+      "action": "data:records:write",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "jit_elevation_window_expired"
+    },
+    {
+      "case_id": "tc_010",
+      "description": "Cross-tenant identity accessing resources in an unassigned tenant",
+      "principal": "usr_022",
+      "action": "data:records:read",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "cross_tenant_isolation_violation_org_mismatch"
+    },
+    {
+      "case_id": "tc_011",
+      "description": "Pending invite user attempting resource access prior to activation",
+      "principal": "usr_023",
+      "action": "data:records:read",
+      "resource": "res_rec_001",
+      "expected": "deny",
+      "reason": "account_status_pending_activation"
+    },
+    {
+      "case_id": "tc_012",
+      "description": "Service account executing authorized automated staging runner task",
+      "principal": "svc_024",
+      "action": "data:records:write",
+      "resource": "res_rec_002",
+      "expected": "allow",
+      "reason": "service_account_holds_explicit_workspace_editor_role"
+    }
+  ]
+}

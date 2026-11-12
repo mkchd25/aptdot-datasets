@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.aptdot.com/data/v1/jwt-claims-reference.schema.json",
+  "title": "Aptdot JWT Claims Reference & Signed Test Token Fixtures",
+  "type": "object",
+  "required": ["metadata", "registered_claims_dictionary", "token_fixtures"],
+  "$defs": {
+    "requirement": { "type": "string", "enum": ["required", "optional", "not_defined"] },
+    "numericDate": { "type": "integer", "minimum": 0 }
+  },
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "date_modified", "license", "license_url", "schema", "source", "reference_time", "reference_time_epoch", "test_signing_key", "total_registered_claims", "total_token_fixtures", "description"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "date_modified": { "type": "string", "format": "date" },
+        "license": { "const": "CC0-1.0" },
+        "license_url": { "type": "string", "format": "uri" },
+        "schema": { "type": "string", "format": "uri" },
+        "source": { "type": "string", "format": "uri" },
+        "reference_time": { "type": "string", "format": "date-time" },
+        "reference_time_epoch": { "$ref": "#/$defs/numericDate" },
+        "specifications": { "type": "object", "additionalProperties": { "type": "string", "format": "uri" } },
+        "test_signing_key": {
+          "type": "object",
+          "required": ["kid", "alg", "secret", "warning"],
+          "properties": {
+            "kid": { "type": "string" },
+            "alg": { "const": "HS256" },
+            "secret": { "type": "string", "minLength": 32 },
+            "warning": { "type": "string" }
+          }
+        },
+        "related_datasets": { "type": "array", "items": { "type": "string", "format": "uri" } },
+        "persona_note": { "type": "string" },
+        "total_registered_claims": { "type": "integer", "minimum": 1 },
+        "total_token_fixtures": { "type": "integer", "minimum": 1 },
+        "description": { "type": "string" }
+      }
+    },
+    "registered_claims_dictionary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "name", "type", "rfc_spec", "required_in", "description", "security_considerations"],
+        "properties": {
+          "claim": { "type": "string", "enum": ["iss", "sub", "aud", "exp", "nbf", "iat", "jti"] },
+          "name": { "type": "string" },
+          "type": { "type": "string" },
+          "rfc_spec": { "type": "string", "format": "uri" },
+          "required_in": {
+            "type": "object",
+            "required": ["rfc7519", "oidc_id_token", "rfc9068_access_token"],
+            "properties": {
+              "rfc7519": { "$ref": "#/$defs/requirement" },
+              "oidc_id_token": { "$ref": "#/$defs/requirement" },
+              "rfc9068_access_token": { "$ref": "#/$defs/requirement" }
+            }
+          },
+          "description": { "type": "string" },
+          "security_considerations": { "type": "string" }
+        }
+      }
+    },
+    "token_fixtures": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["fixture_id", "description", "intended_outcome", "expected_error", "verification", "header", "payload", "token"],
+        "properties": {
+          "fixture_id": { "type": "string" },
+          "description": { "type": "string" },
+          "intended_outcome": {
+            "type": "string",
+            "enum": ["valid", "invalid_expired", "invalid_premature", "invalid_missing_claim", "invalid_audience", "invalid_signature", "invalid_algorithm"]
+          },
+          "expected_error": {
+            "oneOf": [
+              { "type": "null" },
+              {
+                "type": "object",
+                "required": ["pyjwt", "jsonwebtoken"],
+                "properties": { "pyjwt": { "type": "string" }, "jsonwebtoken": { "type": "string" }, "jsonwebtoken_message": { "type": "string" } }
+              }
+            ]
+          },
+          "verification": {
+            "type": "object",
+            "required": ["algorithms", "issuer", "audience", "required_claims"],
+            "properties": {
+              "algorithms": { "type": "array", "items": { "type": "string" } },
+              "issuer": { "type": "string" },
+              "audience": { "type": "string" },
+              "required_claims": { "type": "array", "items": { "type": "string" } },
+              "required_typ": { "type": "string" }
+            }
+          },
+          "header": {
+            "type": "object",
+            "required": ["alg"],
+            "properties": { "alg": { "type": "string" }, "typ": { "type": "string" }, "kid": { "type": "string" } }
+          },
+          "payload": {
+            "type": "object",
+            "properties": {
+              "iss": { "type": "string" },
+              "sub": { "type": "string" },
+              "aud": { "oneOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }] },
+              "exp": { "$ref": "#/$defs/numericDate" },
+              "nbf": { "$ref": "#/$defs/numericDate" },
+              "iat": { "$ref": "#/$defs/numericDate" },
+              "auth_time": { "$ref": "#/$defs/numericDate" },
+              "jti": { "type": "string" },
+              "scope": { "type": "string" },
+              "amr": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "token": { "type": "string", "pattern": "^[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]+\\.[A-Za-z0-9_-]*$" }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "intended_outcome": { "const": "valid" } } },
+            "then": { "properties": { "expected_error": { "type": "null" } } },
+            "else": { "properties": { "expected_error": { "type": "object" } } }
+          }
+        ]
+      }
+    }
+  }
+}

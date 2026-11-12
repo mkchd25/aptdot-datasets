@@ -1,0 +1,5239 @@
+{
+  "$schema": "https://www.aptdot.com/data/v1/design-system-color-tokens.schema.json",
+  "metadata": {
+    "name": "Aptdot Open Color Palette: Design Tokens and WCAG Contrast Matrix",
+    "version": "1.0.0",
+    "date_modified": "2026-10-23",
+    "description": "An original 6-hue, 11-step colour palette (66 colours) generated in OKLCH so that each step has the same WCAG 2 contrast on every hue, with hex, RGB, HSL and OKLCH values, contrast ratios against six surfaces, light and dark semantic tokens, and ready-made CSS, Tailwind CSS v4 and W3C DTCG 2025.10 exports.",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "schema": "https://www.aptdot.com/data/v1/design-system-color-tokens.schema.json",
+    "source": "https://www.aptdot.com/datasets/design-system-color-tokens/",
+    "dtcg_file": "https://www.aptdot.com/data/v1/design-system-color-tokens.tokens.json",
+    "standards": {
+      "contrast": "WCAG 2.2 success criteria 1.4.3 Contrast (Minimum), 1.4.6 Contrast (Enhanced) and 1.4.11 Non-text Contrast",
+      "tokens": "Design Tokens Format Module 2025.10 (W3C Design Tokens Community Group report)",
+      "color": "CSS Color Module Level 4 (oklch, rgb and hsl syntax)"
+    },
+    "counts": {
+      "hues": 6,
+      "steps": 11,
+      "colors": 66,
+      "surfaces": 6,
+      "semantic_tokens_per_mode": 17
+    },
+    "hues": {
+      "slate": "Neutral: text, surfaces and borders",
+      "indigo": "Primary: brand, links and primary buttons",
+      "emerald": "Success: confirmations and positive states",
+      "amber": "Warning: cautions and pending states",
+      "rose": "Danger: errors and destructive actions",
+      "sky": "Info: notices and neutral highlights"
+    },
+    "wcag_thresholds": {
+      "aa": 4.5,
+      "aa_large": 3,
+      "aaa": 7,
+      "aaa_large": 4.5,
+      "non_text": 3
+    },
+    "surfaces": {
+      "white": "#ffffff",
+      "black": "#000000",
+      "slate-50": "#f5f9fc",
+      "slate-100": "#e9f0f6",
+      "slate-900": "#272e3c",
+      "slate-950": "#191f28"
+    },
+    "guarantees": [
+      "Every 500 step has at least 3:1 on white (large text and UI components).",
+      "Every 600 step has at least 4.5:1 on white (WCAG AA body text).",
+      "Every 700 step and darker has at least 7:1 on white (WCAG AAA body text).",
+      "Every 400 step and lighter has at least 4.5:1 on slate-950 (AA text in dark mode).",
+      "Every 300 step and lighter has at least 7:1 on slate-950 (AAA text in dark mode).",
+      "Every colour is inside the sRGB gamut, so its hex value is exact.",
+      "Every semantic text and icon colour has at least 4.5:1 on its surface, and border-strong at least 3:1, in both light and dark mode."
+    ],
+    "step_contrast_on_white": {
+      "50": {
+        "min": 1.058,
+        "max": 1.066
+      },
+      "100": {
+        "min": 1.144,
+        "max": 1.152
+      },
+      "200": {
+        "min": 1.359,
+        "max": 1.366
+      },
+      "300": {
+        "min": 1.79,
+        "max": 1.814
+      },
+      "400": {
+        "min": 2.545,
+        "max": 2.575
+      },
+      "500": {
+        "min": 3.346,
+        "max": 3.381
+      },
+      "600": {
+        "min": 4.82,
+        "max": 4.885
+      },
+      "700": {
+        "min": 7.318,
+        "max": 7.44
+      },
+      "800": {
+        "min": 10.113,
+        "max": 10.292
+      },
+      "900": {
+        "min": 13.563,
+        "max": 13.724
+      },
+      "950": {
+        "min": 16.514,
+        "max": 16.634
+      }
+    },
+    "conventions": {
+      "contrast": "WCAG 2 contrast ratio (L1 + 0.05) / (L2 + 0.05), with relative luminance computed exactly as WCAG 2.2 defines it (sRGB, 0.04045 threshold) from the 8-bit hex value. ratio is rounded down to 3 decimals so it never overstates a pass; the pass flags use the unrounded value.",
+      "levels": "aa: 4.5:1 normal text. aa_large: 3:1 large text (24px, or 18.66px bold). aaa: 7:1. aaa_large: 4.5:1. non_text: 3:1 for UI components and graphics (WCAG 1.4.11).",
+      "oklch": "OKLCH of the exact hex colour. Lightness as a percentage, chroma, hue in degrees; hue is none for greys.",
+      "generation": "Lightness was solved per step for the target contrast on white; chroma follows a per-hue curve and was reduced where needed to stay inside sRGB."
+    }
+  },
+  "palettes": {
+    "slate": [
+      {
+        "token": "color.slate.50",
+        "css_variable": "--color-slate-50",
+        "step": 50,
+        "hex": "#f5f9fc",
+        "rgb": "rgb(245 249 252)",
+        "rgb_components": [
+          245,
+          249,
+          252
+        ],
+        "hsl": "hsl(206 54% 97%)",
+        "oklch": "oklch(97.99% 0.0059 239.82)",
+        "oklch_components": [
+          0.9799,
+          0.0059,
+          239.82
+        ],
+        "relative_luminance": 0.94192,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.058,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.838,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.086,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.862,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.645,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.100",
+        "css_variable": "--color-slate-100",
+        "step": 100,
+        "hex": "#e9f0f6",
+        "rgb": "rgb(233 240 246)",
+        "rgb_components": [
+          233,
+          240,
+          246
+        ],
+        "hsl": "hsl(208 42% 94%)",
+        "oklch": "oklch(95.16% 0.0110 243.65)",
+        "oklch_components": [
+          0.9516,
+          0.011,
+          243.65
+        ],
+        "relative_luminance": 0.86298,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.15,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.259,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.086,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.839,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.4,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.200",
+        "css_variable": "--color-slate-200",
+        "step": 200,
+        "hex": "#d4deea",
+        "rgb": "rgb(212 222 234)",
+        "rgb_components": [
+          212,
+          222,
+          234
+        ],
+        "hsl": "hsl(213 34% 87%)",
+        "oklch": "oklch(89.66% 0.0197 252.89)",
+        "oklch_components": [
+          0.8966,
+          0.0197,
+          252.89
+        ],
+        "relative_luminance": 0.7218,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.36,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.436,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.285,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.182,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 10.008,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.173,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.300",
+        "css_variable": "--color-slate-300",
+        "step": 300,
+        "hex": "#b4c2d4",
+        "rgb": "rgb(180 194 212)",
+        "rgb_components": [
+          180,
+          194,
+          212
+        ],
+        "hsl": "hsl(214 27% 77%)",
+        "oklch": "oklch(80.90% 0.0297 254.71)",
+        "oklch_components": [
+          0.809,
+          0.0297,
+          254.71
+        ],
+        "relative_luminance": 0.5304,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.809,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.608,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.709,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.573,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.526,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.154,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.400",
+        "css_variable": "--color-slate-400",
+        "step": 400,
+        "hex": "#93a4b9",
+        "rgb": "rgb(147 164 185)",
+        "rgb_components": [
+          147,
+          164,
+          185
+        ],
+        "hsl": "hsl(213 21% 65%)",
+        "oklch": "oklch(71.24% 0.0362 253.78)",
+        "oklch_components": [
+          0.7124,
+          0.0362,
+          253.78
+        ],
+        "relative_luminance": 0.36257,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.545,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.251,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.404,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.212,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.349,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.507,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.500",
+        "css_variable": "--color-slate-500",
+        "step": 500,
+        "hex": "#7c8da5",
+        "rgb": "rgb(124 141 165)",
+        "rgb_components": [
+          124,
+          141,
+          165
+        ],
+        "hsl": "hsl(215 19% 57%)",
+        "oklch": "oklch(63.83% 0.0412 257.00)",
+        "oklch_components": [
+          0.6383,
+          0.0412,
+          257
+        ],
+        "relative_luminance": 0.26051,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.381,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.21,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.194,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.94,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.026,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.897,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.600",
+        "css_variable": "--color-slate-600",
+        "step": 600,
+        "hex": "#637289",
+        "rgb": "rgb(99 114 137)",
+        "rgb_components": [
+          99,
+          114,
+          137
+        ],
+        "hsl": "hsl(216 16% 46%)",
+        "oklch": "oklch(54.83% 0.0403 258.84)",
+        "oklch_components": [
+          0.5483,
+          0.0403,
+          258.84
+        ],
+        "relative_luminance": 0.16493,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.885,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.298,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.614,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.247,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.787,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.39,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.slate.700",
+        "css_variable": "--color-slate-700",
+        "step": 700,
+        "hex": "#49566a",
+        "rgb": "rgb(73 86 106)",
+        "rgb_components": [
+          73,
+          86,
+          106
+        ],
+        "hsl": "hsl(216 18% 35%)",
+        "oklch": "oklch(44.99% 0.0368 258.90)",
+        "oklch_components": [
+          0.4499,
+          0.0368,
+          258.9
+        ],
+        "relative_luminance": 0.09113,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.44,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.822,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 7.028,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.469,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.83,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.226,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.slate.800",
+        "css_variable": "--color-slate-800",
+        "step": 800,
+        "hex": "#374152",
+        "rgb": "rgb(55 65 82)",
+        "rgb_components": [
+          55,
+          65,
+          82
+        ],
+        "hsl": "hsl(218 20% 27%)",
+        "oklch": "oklch(37.34% 0.0322 260.96)",
+        "oklch_components": [
+          0.3734,
+          0.0322,
+          260.96
+        ],
+        "relative_luminance": 0.05202,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.292,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.04,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.722,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.948,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.322,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.609,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.slate.900",
+        "css_variable": "--color-slate-900",
+        "step": 900,
+        "hex": "#272e3c",
+        "rgb": "rgb(39 46 60)",
+        "rgb_components": [
+          39,
+          46,
+          60
+        ],
+        "hsl": "hsl(220 21% 19%)",
+        "oklch": "oklch(30.07% 0.0273 264.03)",
+        "oklch_components": [
+          0.3007,
+          0.0273,
+          264.03
+        ],
+        "relative_luminance": 0.02712,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.615,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.542,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.862,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.839,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.216,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.slate.950",
+        "css_variable": "--color-slate-950",
+        "step": 950,
+        "hex": "#191f28",
+        "rgb": "rgb(25 31 40)",
+        "rgb_components": [
+          25,
+          31,
+          40
+        ],
+        "hsl": "hsl(216 23% 13%)",
+        "oklch": "oklch(23.74% 0.0195 258.35)",
+        "oklch_components": [
+          0.2374,
+          0.0195,
+          258.35
+        ],
+        "relative_luminance": 0.0134,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.561,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.267,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.645,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.4,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.216,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ],
+    "indigo": [
+      {
+        "token": "color.indigo.50",
+        "css_variable": "--color-indigo-50",
+        "step": 50,
+        "hex": "#f6f8ff",
+        "rgb": "rgb(246 248 255)",
+        "rgb_components": [
+          246,
+          248,
+          255
+        ],
+        "hsl": "hsl(227 100% 98%)",
+        "oklch": "oklch(97.96% 0.0095 273.36)",
+        "oklch_components": [
+          0.9796,
+          0.0095,
+          273.36
+        ],
+        "relative_luminance": 0.93948,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.061,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.789,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.002,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.083,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.831,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.607,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.100",
+        "css_variable": "--color-indigo-100",
+        "step": 100,
+        "hex": "#ebefff",
+        "rgb": "rgb(235 239 255)",
+        "rgb_components": [
+          235,
+          239,
+          255
+        ],
+        "hsl": "hsl(228 100% 96%)",
+        "oklch": "oklch(95.38% 0.0219 274.74)",
+        "oklch_components": [
+          0.9538,
+          0.0219,
+          274.74
+        ],
+        "relative_luminance": 0.86615,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.146,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.323,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.082,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.003,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.88,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.45,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.200",
+        "css_variable": "--color-indigo-200",
+        "step": 200,
+        "hex": "#d4dbff",
+        "rgb": "rgb(212 219 255)",
+        "rgb_components": [
+          212,
+          219,
+          255
+        ],
+        "hsl": "hsl(230 100% 92%)",
+        "oklch": "oklch(89.75% 0.0500 276.67)",
+        "oklch_components": [
+          0.8975,
+          0.05,
+          276.67
+        ],
+        "relative_luminance": 0.7188,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.365,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.376,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.29,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.187,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 9.969,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.126,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.300",
+        "css_variable": "--color-indigo-300",
+        "step": 300,
+        "hex": "#b1beff",
+        "rgb": "rgb(177 190 255)",
+        "rgb_components": [
+          177,
+          190,
+          255
+        ],
+        "hsl": "hsl(230 100% 85%)",
+        "oklch": "oklch(81.49% 0.0930 275.41)",
+        "oklch_components": [
+          0.8149,
+          0.093,
+          275.41
+        ],
+        "relative_luminance": 0.53394,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.798,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.678,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.698,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.563,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.572,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.21,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.400",
+        "css_variable": "--color-indigo-400",
+        "step": 400,
+        "hex": "#8c9aff",
+        "rgb": "rgb(140 154 255)",
+        "rgb_components": [
+          140,
+          154,
+          255
+        ],
+        "hsl": "hsl(233 100% 77%)",
+        "oklch": "oklch(71.85% 0.1473 276.07)",
+        "oklch_components": [
+          0.7185,
+          0.1473,
+          276.07
+        ],
+        "relative_luminance": 0.35907,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.566,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.181,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.424,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.231,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.304,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.452,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.500",
+        "css_variable": "--color-indigo-500",
+        "step": 500,
+        "hex": "#7480ff",
+        "rgb": "rgb(116 128 255)",
+        "rgb_components": [
+          116,
+          128,
+          255
+        ],
+        "hsl": "hsl(235 100% 73%)",
+        "oklch": "oklch(65.31% 0.1861 275.91)",
+        "oklch_components": [
+          0.6531,
+          0.1861,
+          275.91
+        ],
+        "relative_luminance": 0.26371,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.347,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.274,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.161,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.91,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.068,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.948,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.600",
+        "css_variable": "--color-indigo-600",
+        "step": 600,
+        "hex": "#5b5cfa",
+        "rgb": "rgb(91 92 250)",
+        "rgb_components": [
+          91,
+          92,
+          250
+        ],
+        "hsl": "hsl(240 94% 67%)",
+        "oklch": "oklch(57.06% 0.2290 276.06)",
+        "oklch_components": [
+          0.5706,
+          0.229,
+          276.06
+        ],
+        "relative_luminance": 0.16781,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.82,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.356,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.554,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.191,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.824,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.435,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.indigo.700",
+        "css_variable": "--color-indigo-700",
+        "step": 700,
+        "hex": "#443fcd",
+        "rgb": "rgb(68 63 205)",
+        "rgb_components": [
+          68,
+          63,
+          205
+        ],
+        "hsl": "hsl(242 59% 53%)",
+        "oklch": "oklch(47.05% 0.2107 276.15)",
+        "oklch_components": [
+          0.4705,
+          0.2107,
+          276.15
+        ],
+        "relative_luminance": 0.09192,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.398,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.838,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 6.989,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.433,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.84,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.238,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.indigo.800",
+        "css_variable": "--color-indigo-800",
+        "step": 800,
+        "hex": "#332da4",
+        "rgb": "rgb(51 45 164)",
+        "rgb_components": [
+          51,
+          45,
+          164
+        ],
+        "hsl": "hsl(243 57% 41%)",
+        "oklch": "oklch(39.20% 0.1828 276.07)",
+        "oklch_components": [
+          0.392,
+          0.1828,
+          276.07
+        ],
+        "relative_luminance": 0.05261,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.233,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.052,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.666,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.897,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.33,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.618,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.indigo.900",
+        "css_variable": "--color-indigo-900",
+        "step": 900,
+        "hex": "#231e7c",
+        "rgb": "rgb(35 30 124)",
+        "rgb_components": [
+          35,
+          30,
+          124
+        ],
+        "hsl": "hsl(243 61% 30%)",
+        "oklch": "oklch(31.61% 0.1514 275.68)",
+        "oklch_components": [
+          0.3161,
+          0.1514,
+          275.68
+        ],
+        "relative_luminance": 0.02741,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.563,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.548,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.813,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.793,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.003,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.221,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.indigo.950",
+        "css_variable": "--color-indigo-950",
+        "step": 950,
+        "hex": "#171259",
+        "rgb": "rgb(23 18 89)",
+        "rgb_components": [
+          23,
+          18,
+          89
+        ],
+        "hsl": "hsl(244 66% 21%)",
+        "oklch": "oklch(24.91% 0.1207 276.20)",
+        "oklch_components": [
+          0.2491,
+          0.1207,
+          276.2
+        ],
+        "relative_luminance": 0.01336,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.571,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.267,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.655,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.409,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ],
+    "emerald": [
+      {
+        "token": "color.emerald.50",
+        "css_variable": "--color-emerald-50",
+        "step": 50,
+        "hex": "#eafdf2",
+        "rgb": "rgb(234 253 242)",
+        "rgb_components": [
+          234,
+          253,
+          242
+        ],
+        "hsl": "hsl(145 83% 95%)",
+        "oklch": "oklch(97.71% 0.0246 160.61)",
+        "oklch_components": [
+          0.9771,
+          0.0246,
+          160.61
+        ],
+        "relative_luminance": 0.94154,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.058,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.83,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.086,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.857,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.639,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.100",
+        "css_variable": "--color-emerald-100",
+        "step": 100,
+        "hex": "#d2f8e3",
+        "rgb": "rgb(210 248 227)",
+        "rgb_components": [
+          210,
+          248,
+          227
+        ],
+        "hsl": "hsl(147 73% 90%)",
+        "oklch": "oklch(94.64% 0.0483 161.17)",
+        "oklch_components": [
+          0.9464,
+          0.0483,
+          161.17
+        ],
+        "relative_luminance": 0.86382,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.149,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.276,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.085,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.85,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.413,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.200",
+        "css_variable": "--color-emerald-200",
+        "step": 200,
+        "hex": "#a9ebc9",
+        "rgb": "rgb(169 235 201)",
+        "rgb_components": [
+          169,
+          235,
+          201
+        ],
+        "hsl": "hsl(149 62% 79%)",
+        "oklch": "oklch(88.65% 0.0815 161.71)",
+        "oklch_components": [
+          0.8865,
+          0.0815,
+          161.71
+        ],
+        "relative_luminance": 0.72069,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.362,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.413,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.287,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.184,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 9.993,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.156,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.300",
+        "css_variable": "--color-emerald-300",
+        "step": 300,
+        "hex": "#6bd4a3",
+        "rgb": "rgb(107 212 163)",
+        "rgb_components": [
+          107,
+          212,
+          163
+        ],
+        "hsl": "hsl(152 55% 63%)",
+        "oklch": "oklch(79.37% 0.1217 161.55)",
+        "oklch_components": [
+          0.7937,
+          0.1217,
+          161.55
+        ],
+        "relative_luminance": 0.52857,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.814,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.571,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.714,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.577,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.502,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.125,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.400",
+        "css_variable": "--color-emerald-400",
+        "step": 400,
+        "hex": "#00b87d",
+        "rgb": "rgb(0 184 125)",
+        "rgb_components": [
+          0,
+          184,
+          125
+        ],
+        "hsl": "hsl(161 100% 36%)",
+        "oklch": "oklch(69.14% 0.1528 161.49)",
+        "oklch_components": [
+          0.6914,
+          0.1528,
+          161.49
+        ],
+        "relative_luminance": 0.35762,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.575,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.152,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.433,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.239,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.285,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.429,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.500",
+        "css_variable": "--color-emerald-500",
+        "step": 500,
+        "hex": "#00a06b",
+        "rgb": "rgb(0 160 107)",
+        "rgb_components": [
+          0,
+          160,
+          107
+        ],
+        "hsl": "hsl(160 100% 31%)",
+        "oklch": "oklch(62.32% 0.1388 160.98)",
+        "oklch_components": [
+          0.6232,
+          0.1388,
+          160.98
+        ],
+        "relative_luminance": 0.26203,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.365,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.24,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.178,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.925,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.046,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.921,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.600",
+        "css_variable": "--color-emerald-600",
+        "step": 600,
+        "hex": "#008256",
+        "rgb": "rgb(0 130 86)",
+        "rgb_components": [
+          0,
+          130,
+          86
+        ],
+        "hsl": "hsl(160 100% 25%)",
+        "oklch": "oklch(53.57% 0.1194 160.91)",
+        "oklch_components": [
+          0.5357,
+          0.1194,
+          160.91
+        ],
+        "relative_luminance": 0.16637,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.852,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.327,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.584,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.219,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.805,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.412,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.emerald.700",
+        "css_variable": "--color-emerald-700",
+        "step": 700,
+        "hex": "#006340",
+        "rgb": "rgb(0 99 64)",
+        "rgb_components": [
+          0,
+          99,
+          64
+        ],
+        "hsl": "hsl(159 100% 19%)",
+        "oklch": "oklch(44.11% 0.0988 160.60)",
+        "oklch_components": [
+          0.4411,
+          0.0988,
+          160.6
+        ],
+        "relative_luminance": 0.09294,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.345,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.858,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 6.939,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.387,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.853,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.254,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.emerald.800",
+        "css_variable": "--color-emerald-800",
+        "step": 800,
+        "hex": "#004c30",
+        "rgb": "rgb(0 76 48)",
+        "rgb_components": [
+          0,
+          76,
+          48
+        ],
+        "hsl": "hsl(158 100% 15%)",
+        "oklch": "oklch(36.77% 0.0825 160.50)",
+        "oklch_components": [
+          0.3677,
+          0.0825,
+          160.5
+        ],
+        "relative_luminance": 0.05382,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.113,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.076,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.553,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.793,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.346,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.637,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.emerald.900",
+        "css_variable": "--color-emerald-900",
+        "step": 900,
+        "hex": "#003520",
+        "rgb": "rgb(0 53 32)",
+        "rgb_components": [
+          0,
+          53,
+          32
+        ],
+        "hsl": "hsl(156 100% 10%)",
+        "oklch": "oklch(29.03% 0.0653 160.33)",
+        "oklch_components": [
+          0.2903,
+          0.0653,
+          160.33
+        ],
+        "relative_luminance": 0.0265,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.724,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.53,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.965,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.933,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.007,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.206,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.emerald.950",
+        "css_variable": "--color-emerald-950",
+        "step": 950,
+        "hex": "#002414",
+        "rgb": "rgb(0 36 20)",
+        "rgb_components": [
+          0,
+          36,
+          20
+        ],
+        "hsl": "hsl(153 100% 7%)",
+        "oklch": "oklch(22.97% 0.0521 159.85)",
+        "oklch_components": [
+          0.2297,
+          0.0521,
+          159.85
+        ],
+        "relative_luminance": 0.01312,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.634,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.262,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.714,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.463,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.221,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.004,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ],
+    "amber": [
+      {
+        "token": "color.amber.50",
+        "css_variable": "--color-amber-50",
+        "step": 50,
+        "hex": "#fff8e5",
+        "rgb": "rgb(255 248 229)",
+        "rgb_components": [
+          255,
+          248,
+          229
+        ],
+        "hsl": "hsl(44 100% 95%)",
+        "oklch": "oklch(97.95% 0.0260 90.09)",
+        "oklch_components": [
+          0.9795,
+          0.026,
+          90.09
+        ],
+        "relative_luminance": 0.94052,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.06,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.81,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.001,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.084,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.844,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.623,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.100",
+        "css_variable": "--color-amber-100",
+        "step": 100,
+        "hex": "#ffeecb",
+        "rgb": "rgb(255 238 203)",
+        "rgb_components": [
+          255,
+          238,
+          203
+        ],
+        "hsl": "hsl(40 100% 90%)",
+        "oklch": "oklch(95.38% 0.0492 85.15)",
+        "oklch_components": [
+          0.9538,
+          0.0492,
+          85.15
+        ],
+        "relative_luminance": 0.86721,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.144,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.344,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.081,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.004,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.893,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.467,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.200",
+        "css_variable": "--color-amber-200",
+        "step": 200,
+        "hex": "#fcd89c",
+        "rgb": "rgb(252 216 156)",
+        "rgb_components": [
+          252,
+          216,
+          156
+        ],
+        "hsl": "hsl(37 94% 80%)",
+        "oklch": "oklch(89.89% 0.0863 80.03)",
+        "oklch_components": [
+          0.8989,
+          0.0863,
+          80.03
+        ],
+        "relative_luminance": 0.72207,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.359,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.441,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.284,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.182,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 10.011,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.178,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.300",
+        "css_variable": "--color-amber-300",
+        "step": 300,
+        "hex": "#f1b759",
+        "rgb": "rgb(241 183 89)",
+        "rgb_components": [
+          241,
+          183,
+          89
+        ],
+        "hsl": "hsl(37 84% 65%)",
+        "oklch": "oklch(81.49% 0.1293 77.22)",
+        "oklch_components": [
+          0.8149,
+          0.1293,
+          77.22
+        ],
+        "relative_luminance": 0.53289,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.801,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.657,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.701,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.566,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.558,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.194,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.400",
+        "css_variable": "--color-amber-400",
+        "step": 400,
+        "hex": "#dc9300",
+        "rgb": "rgb(220 147 0)",
+        "rgb_components": [
+          220,
+          147,
+          0
+        ],
+        "hsl": "hsl(40 100% 43%)",
+        "oklch": "oklch(71.87% 0.1525 73.83)",
+        "oklch_components": [
+          0.7187,
+          0.1525,
+          73.83
+        ],
+        "relative_luminance": 0.36083,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.555,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.216,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.414,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.222,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.327,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.48,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.500",
+        "css_variable": "--color-amber-500",
+        "step": 500,
+        "hex": "#c47c00",
+        "rgb": "rgb(196 124 0)",
+        "rgb_components": [
+          196,
+          124,
+          0
+        ],
+        "hsl": "hsl(38 100% 38%)",
+        "oklch": "oklch(64.70% 0.1406 69.52)",
+        "oklch_components": [
+          0.647,
+          0.1406,
+          69.52
+        ],
+        "relative_luminance": 0.26151,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.37,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.23,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.184,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.93,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.039,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.913,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.600",
+        "css_variable": "--color-amber-600",
+        "step": 600,
+        "hex": "#a36200",
+        "rgb": "rgb(163 98 0)",
+        "rgb_components": [
+          163,
+          98,
+          0
+        ],
+        "hsl": "hsl(36 100% 32%)",
+        "oklch": "oklch(55.62% 0.1237 66.17)",
+        "oklch_components": [
+          0.5562,
+          0.1237,
+          66.17
+        ],
+        "relative_luminance": 0.16522,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.878,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.304,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.608,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.242,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.79,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.394,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.amber.700",
+        "css_variable": "--color-amber-700",
+        "step": 700,
+        "hex": "#804800",
+        "rgb": "rgb(128 72 0)",
+        "rgb_components": [
+          128,
+          72,
+          0
+        ],
+        "hsl": "hsl(34 100% 25%)",
+        "oklch": "oklch(45.90% 0.1051 62.54)",
+        "oklch_components": [
+          0.459,
+          0.1051,
+          62.54
+        ],
+        "relative_luminance": 0.09224,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.381,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.844,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 6.973,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.418,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.844,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.243,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.amber.800",
+        "css_variable": "--color-amber-800",
+        "step": 800,
+        "hex": "#653400",
+        "rgb": "rgb(101 52 0)",
+        "rgb_components": [
+          101,
+          52,
+          0
+        ],
+        "hsl": "hsl(31 100% 20%)",
+        "oklch": "oklch(38.07% 0.0907 58.47)",
+        "oklch_components": [
+          0.3807,
+          0.0907,
+          58.47
+        ],
+        "relative_luminance": 0.05223,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.271,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.044,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.703,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.93,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.325,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.612,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.amber.900",
+        "css_variable": "--color-amber-900",
+        "step": 900,
+        "hex": "#4b2300",
+        "rgb": "rgb(75 35 0)",
+        "rgb_components": [
+          75,
+          35,
+          0
+        ],
+        "hsl": "hsl(28 100% 15%)",
+        "oklch": "oklch(30.60% 0.0752 55.62)",
+        "oklch_components": [
+          0.306,
+          0.0752,
+          55.62
+        ],
+        "relative_luminance": 0.02698,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.64,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.539,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.885,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.86,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.001,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.214,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.amber.950",
+        "css_variable": "--color-amber-950",
+        "step": 950,
+        "hex": "#361600",
+        "rgb": "rgb(54 22 0)",
+        "rgb_components": [
+          54,
+          22,
+          0
+        ],
+        "hsl": "hsl(24 100% 11%)",
+        "oklch": "oklch(24.39% 0.0618 53.17)",
+        "oklch_components": [
+          0.2439,
+          0.0618,
+          53.17
+        ],
+        "relative_luminance": 0.01358,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.514,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.271,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.6,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.359,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.212,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.002,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ],
+    "rose": [
+      {
+        "token": "color.rose.50",
+        "css_variable": "--color-rose-50",
+        "step": 50,
+        "hex": "#fff6f7",
+        "rgb": "rgb(255 246 247)",
+        "rgb_components": [
+          255,
+          246,
+          247
+        ],
+        "hsl": "hsl(353 100% 98%)",
+        "oklch": "oklch(98.04% 0.0097 9.53)",
+        "oklch_components": [
+          0.9804,
+          0.0097,
+          9.53
+        ],
+        "relative_luminance": 0.93887,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.061,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.777,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.003,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.083,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.823,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.597,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.100",
+        "css_variable": "--color-rose-100",
+        "step": 100,
+        "hex": "#ffebec",
+        "rgb": "rgb(255 235 236)",
+        "rgb_components": [
+          255,
+          235,
+          236
+        ],
+        "hsl": "hsl(357 100% 96%)",
+        "oklch": "oklch(95.63% 0.0218 14.06)",
+        "oklch_components": [
+          0.9563,
+          0.0218,
+          14.06
+        ],
+        "relative_luminance": 0.86733,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.144,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.346,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.081,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.004,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.895,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.469,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.200",
+        "css_variable": "--color-rose-200",
+        "step": 200,
+        "hex": "#ffd2d6",
+        "rgb": "rgb(255 210 214)",
+        "rgb_components": [
+          255,
+          210,
+          214
+        ],
+        "hsl": "hsl(355 100% 91%)",
+        "oklch": "oklch(90.34% 0.0509 12.12)",
+        "oklch_components": [
+          0.9034,
+          0.0509,
+          12.12
+        ],
+        "relative_luminance": 0.72208,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.359,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.441,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.284,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.182,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 10.011,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.178,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.300",
+        "css_variable": "--color-rose-300",
+        "step": 300,
+        "hex": "#ffaab5",
+        "rgb": "rgb(255 170 181)",
+        "rgb_components": [
+          255,
+          170,
+          181
+        ],
+        "hsl": "hsl(352 100% 83%)",
+        "oklch": "oklch(82.36% 0.1008 11.03)",
+        "oklch_components": [
+          0.8236,
+          0.1008,
+          11.03
+        ],
+        "relative_luminance": 0.53346,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.799,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.669,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.7,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.564,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.565,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.203,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.400",
+        "css_variable": "--color-rose-400",
+        "step": 400,
+        "hex": "#ff768e",
+        "rgb": "rgb(255 118 142)",
+        "rgb_components": [
+          255,
+          118,
+          142
+        ],
+        "hsl": "hsl(349 100% 73%)",
+        "oklch": "oklch(73.36% 0.1676 11.27)",
+        "oklch_components": [
+          0.7336,
+          0.1676,
+          11.27
+        ],
+        "relative_luminance": 0.3617,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.55,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.233,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.409,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.338,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.493,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.500",
+        "css_variable": "--color-rose-500",
+        "step": 500,
+        "hex": "#fd4573",
+        "rgb": "rgb(253 69 115)",
+        "rgb_components": [
+          253,
+          69,
+          115
+        ],
+        "hsl": "hsl(345 98% 63%)",
+        "oklch": "oklch(66.94% 0.2194 11.05)",
+        "oklch_components": [
+          0.6694,
+          0.2194,
+          11.05
+        ],
+        "relative_luminance": 0.26377,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.346,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.275,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.161,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.909,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.068,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.949,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.600",
+        "css_variable": "--color-rose-600",
+        "step": 600,
+        "hex": "#dc1a59",
+        "rgb": "rgb(220 26 89)",
+        "rgb_components": [
+          220,
+          26,
+          89
+        ],
+        "hsl": "hsl(341 79% 48%)",
+        "oklch": "oklch(57.88% 0.2204 10.97)",
+        "oklch_components": [
+          0.5788,
+          0.2204,
+          10.97
+        ],
+        "relative_luminance": 0.16676,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.844,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.335,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.576,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.211,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.81,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.418,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.rose.700",
+        "css_variable": "--color-rose-700",
+        "step": 700,
+        "hex": "#ad0042",
+        "rgb": "rgb(173 0 66)",
+        "rgb_components": [
+          173,
+          0,
+          66
+        ],
+        "hsl": "hsl(337 100% 34%)",
+        "oklch": "oklch(47.74% 0.1908 10.78)",
+        "oklch_components": [
+          0.4774,
+          0.1908,
+          10.78
+        ],
+        "relative_luminance": 0.09278,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.354,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.855,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 6.947,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.394,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.851,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.252,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.rose.800",
+        "css_variable": "--color-rose-800",
+        "step": 800,
+        "hex": "#850032",
+        "rgb": "rgb(133 0 50)",
+        "rgb_components": [
+          133,
+          0,
+          50
+        ],
+        "hsl": "hsl(337 100% 26%)",
+        "oklch": "oklch(39.41% 0.1576 10.17)",
+        "oklch_components": [
+          0.3941,
+          0.1576,
+          10.17
+        ],
+        "relative_luminance": 0.05217,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.277,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.043,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.708,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.936,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.324,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.611,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.rose.900",
+        "css_variable": "--color-rose-900",
+        "step": 900,
+        "hex": "#620023",
+        "rgb": "rgb(98 0 35)",
+        "rgb_components": [
+          98,
+          0,
+          35
+        ],
+        "hsl": "hsl(339 100% 19%)",
+        "oklch": "oklch(31.71% 0.1268 9.99)",
+        "oklch_components": [
+          0.3171,
+          0.1268,
+          9.99
+        ],
+        "relative_luminance": 0.02718,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.604,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.543,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.852,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.829,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.rose.950",
+        "css_variable": "--color-rose-950",
+        "step": 950,
+        "hex": "#450017",
+        "rgb": "rgb(69 0 23)",
+        "rgb_components": [
+          69,
+          0,
+          23
+        ],
+        "hsl": "hsl(340 100% 14%)",
+        "oklch": "oklch(24.97% 0.0999 9.31)",
+        "oklch_components": [
+          0.2497,
+          0.0999,
+          9.31
+        ],
+        "relative_luminance": 0.01327,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.595,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.265,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.677,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.429,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.218,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.002,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ],
+    "sky": [
+      {
+        "token": "color.sky.50",
+        "css_variable": "--color-sky-50",
+        "step": 50,
+        "hex": "#f0f9ff",
+        "rgb": "rgb(240 249 255)",
+        "rgb_components": [
+          240,
+          249,
+          255
+        ],
+        "hsl": "hsl(204 100% 97%)",
+        "oklch": "oklch(97.71% 0.0125 236.62)",
+        "oklch_components": [
+          0.9771,
+          0.0125,
+          236.62
+        ],
+        "relative_luminance": 0.93497,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.066,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 19.699,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.007,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.078,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 12.772,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 15.536,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.100",
+        "css_variable": "--color-sky-100",
+        "step": 100,
+        "hex": "#ddf2ff",
+        "rgb": "rgb(221 242 255)",
+        "rgb_components": [
+          221,
+          242,
+          255
+        ],
+        "hsl": "hsl(203 100% 93%)",
+        "oklch": "oklch(94.96% 0.0283 234.84)",
+        "oklch_components": [
+          0.9496,
+          0.0283,
+          234.84
+        ],
+        "relative_luminance": 0.86096,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.152,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 18.219,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.088,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.002,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 11.812,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 14.368,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.200",
+        "css_variable": "--color-sky-200",
+        "step": 200,
+        "hex": "#b4e3ff",
+        "rgb": "rgb(180 227 255)",
+        "rgb_components": [
+          180,
+          227,
+          255
+        ],
+        "hsl": "hsl(202 100% 85%)",
+        "oklch": "oklch(89.21% 0.0621 234.54)",
+        "oklch_components": [
+          0.8921,
+          0.0621,
+          234.54
+        ],
+        "relative_luminance": 0.71861,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.366,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 15.372,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.29,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.187,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 9.967,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 12.123,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.300",
+        "css_variable": "--color-sky-300",
+        "step": 300,
+        "hex": "#6dccff",
+        "rgb": "rgb(109 204 255)",
+        "rgb_components": [
+          109,
+          204,
+          255
+        ],
+        "hsl": "hsl(201 100% 71%)",
+        "oklch": "oklch(80.66% 0.1155 234.16)",
+        "oklch_components": [
+          0.8066,
+          0.1155,
+          234.16
+        ],
+        "relative_luminance": 0.53657,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 1.79,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 11.731,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 1.691,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 1.556,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 7.606,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 9.252,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.400",
+        "css_variable": "--color-sky-400",
+        "step": 400,
+        "hex": "#11adee",
+        "rgb": "rgb(17 173 238)",
+        "rgb_components": [
+          17,
+          173,
+          238
+        ],
+        "hsl": "hsl(198 87% 50%)",
+        "oklch": "oklch(70.61% 0.1471 235.01)",
+        "oklch_components": [
+          0.7061,
+          0.1471,
+          235.01
+        ],
+        "relative_luminance": 0.36179,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 2.549,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "black": {
+            "ratio": 8.235,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 2.408,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-100": {
+            "ratio": 2.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 5.339,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 6.495,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.500",
+        "css_variable": "--color-sky-500",
+        "step": 500,
+        "hex": "#0095d2",
+        "rgb": "rgb(0 149 210)",
+        "rgb_components": [
+          0,
+          149,
+          210
+        ],
+        "hsl": "hsl(197 100% 41%)",
+        "oklch": "oklch(63.40% 0.1374 236.48)",
+        "oklch_components": [
+          0.634,
+          0.1374,
+          236.48
+        ],
+        "relative_luminance": 0.26148,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 3.37,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 6.229,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 3.184,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 2.931,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-900": {
+            "ratio": 4.039,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-950": {
+            "ratio": 4.913,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.600",
+        "css_variable": "--color-sky-600",
+        "step": 600,
+        "hex": "#0079ac",
+        "rgb": "rgb(0 121 172)",
+        "rgb_components": [
+          0,
+          121,
+          172
+        ],
+        "hsl": "hsl(198 100% 34%)",
+        "oklch": "oklch(54.56% 0.1187 236.74)",
+        "oklch_components": [
+          0.5456,
+          0.1187,
+          236.74
+        ],
+        "relative_luminance": 0.16653,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 4.849,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 4.33,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-50": {
+            "ratio": 4.58,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 4.216,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 2.807,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 3.415,
+            "aa": false,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": true
+          }
+        }
+      },
+      {
+        "token": "color.sky.700",
+        "css_variable": "--color-sky-700",
+        "step": 700,
+        "hex": "#005c85",
+        "rgb": "rgb(0 92 133)",
+        "rgb_components": [
+          0,
+          92,
+          133
+        ],
+        "hsl": "hsl(198 100% 26%)",
+        "oklch": "oklch(45.02% 0.0988 237.37)",
+        "oklch_components": [
+          0.4502,
+          0.0988,
+          237.37
+        ],
+        "relative_luminance": 0.09348,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 7.318,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.869,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 6.913,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 6.363,
+            "aa": true,
+            "aa_large": true,
+            "aaa": false,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.86,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 2.263,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.sky.800",
+        "css_variable": "--color-sky-800",
+        "step": 800,
+        "hex": "#004567",
+        "rgb": "rgb(0 69 103)",
+        "rgb_components": [
+          0,
+          69,
+          103
+        ],
+        "hsl": "hsl(200 100% 20%)",
+        "oklch": "oklch(37.13% 0.0835 238.89)",
+        "oklch_components": [
+          0.3713,
+          0.0835,
+          238.89
+        ],
+        "relative_luminance": 0.05236,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 10.258,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 2.047,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 9.69,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 8.919,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.327,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.614,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.sky.900",
+        "css_variable": "--color-sky-900",
+        "step": 900,
+        "hex": "#00314c",
+        "rgb": "rgb(0 49 76)",
+        "rgb_components": [
+          0,
+          49,
+          76
+        ],
+        "hsl": "hsl(201 100% 15%)",
+        "oklch": "oklch(29.87% 0.0685 240.08)",
+        "oklch_components": [
+          0.2987,
+          0.0685,
+          240.08
+        ],
+        "relative_luminance": 0.02718,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 13.603,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.543,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 12.851,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 11.828,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      },
+      {
+        "token": "color.sky.950",
+        "css_variable": "--color-sky-950",
+        "step": 950,
+        "hex": "#002134",
+        "rgb": "rgb(0 33 52)",
+        "rgb_components": [
+          0,
+          33,
+          52
+        ],
+        "hsl": "hsl(202 100% 10%)",
+        "oklch": "oklch(23.55% 0.0527 238.53)",
+        "oklch_components": [
+          0.2355,
+          0.0527,
+          238.53
+        ],
+        "relative_luminance": 0.01336,
+        "in_srgb_gamut": true,
+        "contrast": {
+          "white": {
+            "ratio": 16.572,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "black": {
+            "ratio": 1.267,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-50": {
+            "ratio": 15.656,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-100": {
+            "ratio": 14.41,
+            "aa": true,
+            "aa_large": true,
+            "aaa": true,
+            "aaa_large": true,
+            "non_text": true
+          },
+          "slate-900": {
+            "ratio": 1.217,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          },
+          "slate-950": {
+            "ratio": 1,
+            "aa": false,
+            "aa_large": false,
+            "aaa": false,
+            "aaa_large": false,
+            "non_text": false
+          }
+        }
+      }
+    ]
+  },
+  "semantic": {
+    "light": {
+      "background": {
+        "token": "semantic.light.background",
+        "css_variable": "--color-background",
+        "references": "{color.slate.50}",
+        "hex": "#f5f9fc",
+        "purpose": "Page background"
+      },
+      "surface": {
+        "token": "semantic.light.surface",
+        "css_variable": "--color-surface",
+        "references": "{color.white}",
+        "hex": "#ffffff",
+        "purpose": "Cards and panels"
+      },
+      "text": {
+        "token": "semantic.light.text",
+        "css_variable": "--color-text",
+        "references": "{color.slate.900}",
+        "hex": "#272e3c",
+        "purpose": "Body text",
+        "checked_against": "semantic.light.background",
+        "contrast": {
+          "ratio": 12.862,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "text-muted": {
+        "token": "semantic.light.text-muted",
+        "css_variable": "--color-text-muted",
+        "references": "{color.slate.600}",
+        "hex": "#637289",
+        "purpose": "Secondary text",
+        "checked_against": "semantic.light.background",
+        "contrast": {
+          "ratio": 4.614,
+          "aa": true,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "border": {
+        "token": "semantic.light.border",
+        "css_variable": "--color-border",
+        "references": "{color.slate.200}",
+        "hex": "#d4deea",
+        "purpose": "Decorative dividers (not required to meet 3:1)"
+      },
+      "border-strong": {
+        "token": "semantic.light.border-strong",
+        "css_variable": "--color-border-strong",
+        "references": "{color.slate.500}",
+        "hex": "#7c8da5",
+        "purpose": "Input and control borders (WCAG 1.4.11, 3:1)",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 3.381,
+          "aa": false,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": false,
+          "non_text": true
+        }
+      },
+      "primary": {
+        "token": "semantic.light.primary",
+        "css_variable": "--color-primary",
+        "references": "{color.indigo.600}",
+        "hex": "#5b5cfa",
+        "purpose": "Primary buttons and links",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 4.82,
+          "aa": true,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "primary-hover": {
+        "token": "semantic.light.primary-hover",
+        "css_variable": "--color-primary-hover",
+        "references": "{color.indigo.700}",
+        "hex": "#443fcd",
+        "purpose": "Hover state of primary",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 7.398,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "on-primary": {
+        "token": "semantic.light.on-primary",
+        "css_variable": "--color-on-primary",
+        "references": "{color.white}",
+        "hex": "#ffffff",
+        "purpose": "Text on primary buttons",
+        "checked_against": "semantic.light.primary",
+        "contrast": {
+          "ratio": 4.82,
+          "aa": true,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "success": {
+        "token": "semantic.light.success",
+        "css_variable": "--color-success",
+        "references": "{color.emerald.700}",
+        "hex": "#006340",
+        "purpose": "Success text and icons",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 7.345,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "warning": {
+        "token": "semantic.light.warning",
+        "css_variable": "--color-warning",
+        "references": "{color.amber.700}",
+        "hex": "#804800",
+        "purpose": "Warning text and icons",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 7.381,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "danger": {
+        "token": "semantic.light.danger",
+        "css_variable": "--color-danger",
+        "references": "{color.rose.600}",
+        "hex": "#dc1a59",
+        "purpose": "Error text and icons",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 4.844,
+          "aa": true,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "info": {
+        "token": "semantic.light.info",
+        "css_variable": "--color-info",
+        "references": "{color.sky.700}",
+        "hex": "#005c85",
+        "purpose": "Info text and icons",
+        "checked_against": "semantic.light.surface",
+        "contrast": {
+          "ratio": 7.318,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "success-subtle": {
+        "token": "semantic.light.success-subtle",
+        "css_variable": "--color-success-subtle",
+        "references": "{color.emerald.50}",
+        "hex": "#eafdf2",
+        "purpose": "Success banner background"
+      },
+      "warning-subtle": {
+        "token": "semantic.light.warning-subtle",
+        "css_variable": "--color-warning-subtle",
+        "references": "{color.amber.50}",
+        "hex": "#fff8e5",
+        "purpose": "Warning banner background"
+      },
+      "danger-subtle": {
+        "token": "semantic.light.danger-subtle",
+        "css_variable": "--color-danger-subtle",
+        "references": "{color.rose.50}",
+        "hex": "#fff6f7",
+        "purpose": "Error banner background"
+      },
+      "info-subtle": {
+        "token": "semantic.light.info-subtle",
+        "css_variable": "--color-info-subtle",
+        "references": "{color.sky.50}",
+        "hex": "#f0f9ff",
+        "purpose": "Info banner background"
+      }
+    },
+    "dark": {
+      "background": {
+        "token": "semantic.dark.background",
+        "css_variable": "--color-background",
+        "references": "{color.slate.950}",
+        "hex": "#191f28",
+        "purpose": "Page background"
+      },
+      "surface": {
+        "token": "semantic.dark.surface",
+        "css_variable": "--color-surface",
+        "references": "{color.slate.900}",
+        "hex": "#272e3c",
+        "purpose": "Cards and panels"
+      },
+      "text": {
+        "token": "semantic.dark.text",
+        "css_variable": "--color-text",
+        "references": "{color.slate.50}",
+        "hex": "#f5f9fc",
+        "purpose": "Body text",
+        "checked_against": "semantic.dark.background",
+        "contrast": {
+          "ratio": 15.645,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "text-muted": {
+        "token": "semantic.dark.text-muted",
+        "css_variable": "--color-text-muted",
+        "references": "{color.slate.300}",
+        "hex": "#b4c2d4",
+        "purpose": "Secondary text",
+        "checked_against": "semantic.dark.background",
+        "contrast": {
+          "ratio": 9.154,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "border": {
+        "token": "semantic.dark.border",
+        "css_variable": "--color-border",
+        "references": "{color.slate.800}",
+        "hex": "#374152",
+        "purpose": "Decorative dividers (not required to meet 3:1)"
+      },
+      "border-strong": {
+        "token": "semantic.dark.border-strong",
+        "css_variable": "--color-border-strong",
+        "references": "{color.slate.500}",
+        "hex": "#7c8da5",
+        "purpose": "Input and control borders (WCAG 1.4.11, 3:1)",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 4.026,
+          "aa": false,
+          "aa_large": true,
+          "aaa": false,
+          "aaa_large": false,
+          "non_text": true
+        }
+      },
+      "primary": {
+        "token": "semantic.dark.primary",
+        "css_variable": "--color-primary",
+        "references": "{color.indigo.300}",
+        "hex": "#b1beff",
+        "purpose": "Primary buttons and links",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 7.572,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "primary-hover": {
+        "token": "semantic.dark.primary-hover",
+        "css_variable": "--color-primary-hover",
+        "references": "{color.indigo.200}",
+        "hex": "#d4dbff",
+        "purpose": "Hover state of primary",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 9.969,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "on-primary": {
+        "token": "semantic.dark.on-primary",
+        "css_variable": "--color-on-primary",
+        "references": "{color.slate.950}",
+        "hex": "#191f28",
+        "purpose": "Text on primary buttons",
+        "checked_against": "semantic.dark.primary",
+        "contrast": {
+          "ratio": 9.21,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "success": {
+        "token": "semantic.dark.success",
+        "css_variable": "--color-success",
+        "references": "{color.emerald.300}",
+        "hex": "#6bd4a3",
+        "purpose": "Success text and icons",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 7.502,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "warning": {
+        "token": "semantic.dark.warning",
+        "css_variable": "--color-warning",
+        "references": "{color.amber.300}",
+        "hex": "#f1b759",
+        "purpose": "Warning text and icons",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 7.558,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "danger": {
+        "token": "semantic.dark.danger",
+        "css_variable": "--color-danger",
+        "references": "{color.rose.300}",
+        "hex": "#ffaab5",
+        "purpose": "Error text and icons",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 7.565,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "info": {
+        "token": "semantic.dark.info",
+        "css_variable": "--color-info",
+        "references": "{color.sky.300}",
+        "hex": "#6dccff",
+        "purpose": "Info text and icons",
+        "checked_against": "semantic.dark.surface",
+        "contrast": {
+          "ratio": 7.606,
+          "aa": true,
+          "aa_large": true,
+          "aaa": true,
+          "aaa_large": true,
+          "non_text": true
+        }
+      },
+      "success-subtle": {
+        "token": "semantic.dark.success-subtle",
+        "css_variable": "--color-success-subtle",
+        "references": "{color.emerald.950}",
+        "hex": "#002414",
+        "purpose": "Success banner background"
+      },
+      "warning-subtle": {
+        "token": "semantic.dark.warning-subtle",
+        "css_variable": "--color-warning-subtle",
+        "references": "{color.amber.950}",
+        "hex": "#361600",
+        "purpose": "Warning banner background"
+      },
+      "danger-subtle": {
+        "token": "semantic.dark.danger-subtle",
+        "css_variable": "--color-danger-subtle",
+        "references": "{color.rose.950}",
+        "hex": "#450017",
+        "purpose": "Error banner background"
+      },
+      "info-subtle": {
+        "token": "semantic.dark.info-subtle",
+        "css_variable": "--color-info-subtle",
+        "references": "{color.sky.950}",
+        "hex": "#002134",
+        "purpose": "Info banner background"
+      }
+    }
+  },
+  "exports": {
+    "css_variables": ":root {\n  --color-slate-50: #f5f9fc;\n  --color-slate-100: #e9f0f6;\n  --color-slate-200: #d4deea;\n  --color-slate-300: #b4c2d4;\n  --color-slate-400: #93a4b9;\n  --color-slate-500: #7c8da5;\n  --color-slate-600: #637289;\n  --color-slate-700: #49566a;\n  --color-slate-800: #374152;\n  --color-slate-900: #272e3c;\n  --color-slate-950: #191f28;\n  --color-indigo-50: #f6f8ff;\n  --color-indigo-100: #ebefff;\n  --color-indigo-200: #d4dbff;\n  --color-indigo-300: #b1beff;\n  --color-indigo-400: #8c9aff;\n  --color-indigo-500: #7480ff;\n  --color-indigo-600: #5b5cfa;\n  --color-indigo-700: #443fcd;\n  --color-indigo-800: #332da4;\n  --color-indigo-900: #231e7c;\n  --color-indigo-950: #171259;\n  --color-emerald-50: #eafdf2;\n  --color-emerald-100: #d2f8e3;\n  --color-emerald-200: #a9ebc9;\n  --color-emerald-300: #6bd4a3;\n  --color-emerald-400: #00b87d;\n  --color-emerald-500: #00a06b;\n  --color-emerald-600: #008256;\n  --color-emerald-700: #006340;\n  --color-emerald-800: #004c30;\n  --color-emerald-900: #003520;\n  --color-emerald-950: #002414;\n  --color-amber-50: #fff8e5;\n  --color-amber-100: #ffeecb;\n  --color-amber-200: #fcd89c;\n  --color-amber-300: #f1b759;\n  --color-amber-400: #dc9300;\n  --color-amber-500: #c47c00;\n  --color-amber-600: #a36200;\n  --color-amber-700: #804800;\n  --color-amber-800: #653400;\n  --color-amber-900: #4b2300;\n  --color-amber-950: #361600;\n  --color-rose-50: #fff6f7;\n  --color-rose-100: #ffebec;\n  --color-rose-200: #ffd2d6;\n  --color-rose-300: #ffaab5;\n  --color-rose-400: #ff768e;\n  --color-rose-500: #fd4573;\n  --color-rose-600: #dc1a59;\n  --color-rose-700: #ad0042;\n  --color-rose-800: #850032;\n  --color-rose-900: #620023;\n  --color-rose-950: #450017;\n  --color-sky-50: #f0f9ff;\n  --color-sky-100: #ddf2ff;\n  --color-sky-200: #b4e3ff;\n  --color-sky-300: #6dccff;\n  --color-sky-400: #11adee;\n  --color-sky-500: #0095d2;\n  --color-sky-600: #0079ac;\n  --color-sky-700: #005c85;\n  --color-sky-800: #004567;\n  --color-sky-900: #00314c;\n  --color-sky-950: #002134;\n}\n",
+    "tailwind_v4_theme": "@theme {\n  --color-slate-50: oklch(97.99% 0.0059 239.82);\n  --color-slate-100: oklch(95.16% 0.0110 243.65);\n  --color-slate-200: oklch(89.66% 0.0197 252.89);\n  --color-slate-300: oklch(80.90% 0.0297 254.71);\n  --color-slate-400: oklch(71.24% 0.0362 253.78);\n  --color-slate-500: oklch(63.83% 0.0412 257.00);\n  --color-slate-600: oklch(54.83% 0.0403 258.84);\n  --color-slate-700: oklch(44.99% 0.0368 258.90);\n  --color-slate-800: oklch(37.34% 0.0322 260.96);\n  --color-slate-900: oklch(30.07% 0.0273 264.03);\n  --color-slate-950: oklch(23.74% 0.0195 258.35);\n  --color-indigo-50: oklch(97.96% 0.0095 273.36);\n  --color-indigo-100: oklch(95.38% 0.0219 274.74);\n  --color-indigo-200: oklch(89.75% 0.0500 276.67);\n  --color-indigo-300: oklch(81.49% 0.0930 275.41);\n  --color-indigo-400: oklch(71.85% 0.1473 276.07);\n  --color-indigo-500: oklch(65.31% 0.1861 275.91);\n  --color-indigo-600: oklch(57.06% 0.2290 276.06);\n  --color-indigo-700: oklch(47.05% 0.2107 276.15);\n  --color-indigo-800: oklch(39.20% 0.1828 276.07);\n  --color-indigo-900: oklch(31.61% 0.1514 275.68);\n  --color-indigo-950: oklch(24.91% 0.1207 276.20);\n  --color-emerald-50: oklch(97.71% 0.0246 160.61);\n  --color-emerald-100: oklch(94.64% 0.0483 161.17);\n  --color-emerald-200: oklch(88.65% 0.0815 161.71);\n  --color-emerald-300: oklch(79.37% 0.1217 161.55);\n  --color-emerald-400: oklch(69.14% 0.1528 161.49);\n  --color-emerald-500: oklch(62.32% 0.1388 160.98);\n  --color-emerald-600: oklch(53.57% 0.1194 160.91);\n  --color-emerald-700: oklch(44.11% 0.0988 160.60);\n  --color-emerald-800: oklch(36.77% 0.0825 160.50);\n  --color-emerald-900: oklch(29.03% 0.0653 160.33);\n  --color-emerald-950: oklch(22.97% 0.0521 159.85);\n  --color-amber-50: oklch(97.95% 0.0260 90.09);\n  --color-amber-100: oklch(95.38% 0.0492 85.15);\n  --color-amber-200: oklch(89.89% 0.0863 80.03);\n  --color-amber-300: oklch(81.49% 0.1293 77.22);\n  --color-amber-400: oklch(71.87% 0.1525 73.83);\n  --color-amber-500: oklch(64.70% 0.1406 69.52);\n  --color-amber-600: oklch(55.62% 0.1237 66.17);\n  --color-amber-700: oklch(45.90% 0.1051 62.54);\n  --color-amber-800: oklch(38.07% 0.0907 58.47);\n  --color-amber-900: oklch(30.60% 0.0752 55.62);\n  --color-amber-950: oklch(24.39% 0.0618 53.17);\n  --color-rose-50: oklch(98.04% 0.0097 9.53);\n  --color-rose-100: oklch(95.63% 0.0218 14.06);\n  --color-rose-200: oklch(90.34% 0.0509 12.12);\n  --color-rose-300: oklch(82.36% 0.1008 11.03);\n  --color-rose-400: oklch(73.36% 0.1676 11.27);\n  --color-rose-500: oklch(66.94% 0.2194 11.05);\n  --color-rose-600: oklch(57.88% 0.2204 10.97);\n  --color-rose-700: oklch(47.74% 0.1908 10.78);\n  --color-rose-800: oklch(39.41% 0.1576 10.17);\n  --color-rose-900: oklch(31.71% 0.1268 9.99);\n  --color-rose-950: oklch(24.97% 0.0999 9.31);\n  --color-sky-50: oklch(97.71% 0.0125 236.62);\n  --color-sky-100: oklch(94.96% 0.0283 234.84);\n  --color-sky-200: oklch(89.21% 0.0621 234.54);\n  --color-sky-300: oklch(80.66% 0.1155 234.16);\n  --color-sky-400: oklch(70.61% 0.1471 235.01);\n  --color-sky-500: oklch(63.40% 0.1374 236.48);\n  --color-sky-600: oklch(54.56% 0.1187 236.74);\n  --color-sky-700: oklch(45.02% 0.0988 237.37);\n  --color-sky-800: oklch(37.13% 0.0835 238.89);\n  --color-sky-900: oklch(29.87% 0.0685 240.08);\n  --color-sky-950: oklch(23.55% 0.0527 238.53);\n}\n",
+    "semantic_css": ":root {\n  --color-background: var(--color-slate-50);\n  --color-surface: #ffffff;\n  --color-text: var(--color-slate-900);\n  --color-text-muted: var(--color-slate-600);\n  --color-border: var(--color-slate-200);\n  --color-border-strong: var(--color-slate-500);\n  --color-primary: var(--color-indigo-600);\n  --color-primary-hover: var(--color-indigo-700);\n  --color-on-primary: #ffffff;\n  --color-success: var(--color-emerald-700);\n  --color-warning: var(--color-amber-700);\n  --color-danger: var(--color-rose-600);\n  --color-info: var(--color-sky-700);\n  --color-success-subtle: var(--color-emerald-50);\n  --color-warning-subtle: var(--color-amber-50);\n  --color-danger-subtle: var(--color-rose-50);\n  --color-info-subtle: var(--color-sky-50);\n}\n@media (prefers-color-scheme: dark) {\n  :root {\n    --color-background: var(--color-slate-950);\n    --color-surface: var(--color-slate-900);\n    --color-text: var(--color-slate-50);\n    --color-text-muted: var(--color-slate-300);\n    --color-border: var(--color-slate-800);\n    --color-border-strong: var(--color-slate-500);\n    --color-primary: var(--color-indigo-300);\n    --color-primary-hover: var(--color-indigo-200);\n    --color-on-primary: var(--color-slate-950);\n    --color-success: var(--color-emerald-300);\n    --color-warning: var(--color-amber-300);\n    --color-danger: var(--color-rose-300);\n    --color-info: var(--color-sky-300);\n    --color-success-subtle: var(--color-emerald-950);\n    --color-warning-subtle: var(--color-amber-950);\n    --color-danger-subtle: var(--color-rose-950);\n    --color-info-subtle: var(--color-sky-950);\n  }\n}\n"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.aptdot.com/data/v1/http-security-headers.schema.json",
+  "title": "Aptdot HTTPSecurityHeadersMatrix",
+  "type": "object",
+  "required": ["metadata", "headers"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": ["name", "version", "generated_at", "license", "total_headers", "description"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "license": { "type": "string", "format": "uri" },
+        "total_headers": { "type": "integer", "minimum": 1 },
+        "description": { "type": "string" }
+      }
+    },
+    "headers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "header",
+          "category",
+          "rfc_w3c_spec",
+          "baseline_default",
+          "recommended_production",
+          "risk_level",
+          "app_targets",
+          "deprecated_alternatives",
+          "browser_compatibility",
+          "common_pitfalls",
+          "snippets"
+        ],
+        "properties": {
+          "header": { "type": "string" },
+          "category": { "type": "string" },
+          "rfc_w3c_spec": { "type": "string", "format": "uri" },
+          "baseline_default": { "type": "string" },
+          "recommended_production": { "type": "string" },
+          "risk_level": { "type": "string", "enum": ["Critical", "High", "Medium", "Low"] },
+          "app_targets": { "type": "array", "items": { "type": "string" } },
+          "deprecated_alternatives": { "type": "array", "items": { "type": "string" } },
+          "browser_compatibility": { "type": "object" },
+          "common_pitfalls": { "type": "string" },
+          "snippets": {
+            "type": "object",
+            "required": ["nginx", "apache", "next_js", "vercel", "netlify", "caddy", "helmet"],
+            "properties": {
+              "nginx": { "type": "string" },
+              "apache": { "type": "string" },
+              "next_js": { "type": "string" },
+              "vercel": { "type": "string" },
+              "netlify": { "type": "string" },
+              "caddy": { "type": "string" },
+              "helmet": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

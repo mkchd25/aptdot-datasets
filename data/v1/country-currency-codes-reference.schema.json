@@ -1,0 +1,190 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.aptdot.com/data/v1/country-currency-codes-reference.schema.json",
+  "title": "Aptdot ISO 3166-1 Country Codes and ISO 4217 Currencies Reference",
+  "description": "Structure of the Aptdot country and currency reference: ISO 3166-1 countries with regions, currencies, calling codes and time zones, ISO 4217 currency codes with minor units and payment-provider decimals, and recent currency changes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "metadata", "countries", "currencies", "withdrawn_since_2020", "user_assigned_codes"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "date_modified", "description", "schema", "source", "counts", "sources", "license", "license_url", "notices", "iso_4217", "conventions", "edge_cases"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "date_modified": { "type": "string", "format": "date" },
+        "description": { "type": "string", "minLength": 50 },
+        "schema": { "type": "string", "format": "uri" },
+        "source": { "type": "string", "format": "uri" },
+        "counts": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0 } },
+        "sources": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "url", "fields", "terms"],
+            "properties": {
+              "name": { "type": "string" },
+              "version": { "type": "string" },
+              "url": { "type": "string", "format": "uri" },
+              "urls": { "type": "array", "items": { "type": "string", "format": "uri" } },
+              "fields": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+              "terms": { "type": "string" }
+            }
+          }
+        },
+        "license": { "type": "string" },
+        "license_url": { "type": "string", "format": "uri" },
+        "notices": { "type": "object", "additionalProperties": { "type": "string" } },
+        "iso_4217": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["list_one_published", "latest_amendment"],
+          "properties": {
+            "list_one_published": { "type": "string", "format": "date" },
+            "latest_amendment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["number", "issued", "effective", "summary"],
+              "properties": {
+                "number": { "type": "integer" },
+                "issued": { "type": "string", "format": "date" },
+                "effective": { "type": "string", "format": "date" },
+                "summary": { "type": "string" }
+              }
+            }
+          }
+        },
+        "conventions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "edge_cases": {
+          "type": "object",
+          "additionalProperties": { "type": "array", "items": { "type": "string", "pattern": "^[A-Z]{2,3}$" }, "uniqueItems": true }
+        }
+      }
+    },
+    "countries": { "type": "array", "minItems": 249, "maxItems": 249, "items": { "$ref": "#/$defs/country" } },
+    "currencies": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/currency" } },
+    "withdrawn_since_2020": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "numeric", "name", "country", "withdrawn", "replaced_by"],
+        "properties": {
+          "code": { "$ref": "#/$defs/currencyCode" },
+          "numeric": { "oneOf": [{ "$ref": "#/$defs/numeric3" }, { "type": "null" }] },
+          "name": { "type": "string" },
+          "country": { "$ref": "#/$defs/alpha2" },
+          "withdrawn": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" },
+          "replaced_by": { "oneOf": [{ "$ref": "#/$defs/currencyCode" }, { "type": "null" }] }
+        }
+      }
+    },
+    "user_assigned_codes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "alpha_3", "numeric", "name", "status", "currencies", "calling_code", "note"],
+        "properties": {
+          "code": { "$ref": "#/$defs/alpha2" },
+          "alpha_3": { "type": "string", "pattern": "^[A-Z]{3}$" },
+          "numeric": { "$ref": "#/$defs/numeric3" },
+          "name": { "type": "string" },
+          "status": { "const": "user_assigned" },
+          "currencies": { "type": "array", "items": { "type": "object" } },
+          "calling_code": { "$ref": "#/$defs/callingCode" },
+          "note": { "type": "string" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "alpha2": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "numeric3": { "type": "string", "pattern": "^[0-9]{3}$" },
+    "currencyCode": { "type": "string", "pattern": "^[A-Z]{3}$" },
+    "callingCode": { "type": "string", "pattern": "^\\+[1-9][0-9]{0,3}$" },
+    "region": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "name"],
+          "properties": { "code": { "$ref": "#/$defs/numeric3" }, "name": { "type": "string" } }
+        }
+      ]
+    },
+    "country": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alpha_2", "alpha_3", "numeric", "name", "name_short", "flag", "region", "subregion", "intermediate_region", "currencies", "iso_4217_currencies", "calling_code", "eu_member", "eurozone", "timezones", "primary_timezone"],
+      "properties": {
+        "alpha_2": { "$ref": "#/$defs/alpha2" },
+        "alpha_3": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "numeric": { "$ref": "#/$defs/numeric3" },
+        "name": { "type": "string", "minLength": 1 },
+        "name_short": { "type": ["string", "null"] },
+        "flag": { "type": "string", "minLength": 2, "maxLength": 2 },
+        "region": { "$ref": "#/$defs/region" },
+        "subregion": { "$ref": "#/$defs/region" },
+        "intermediate_region": { "$ref": "#/$defs/region" },
+        "currencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["code", "since", "in_iso_4217_list"],
+            "properties": {
+              "code": { "$ref": "#/$defs/currencyCode" },
+              "since": { "type": ["string", "null"], "format": "date" },
+              "in_iso_4217_list": { "type": "boolean" }
+            }
+          }
+        },
+        "iso_4217_currencies": { "type": "array", "items": { "$ref": "#/$defs/currencyCode" }, "uniqueItems": true },
+        "calling_code": { "oneOf": [{ "$ref": "#/$defs/callingCode" }, { "type": "null" }] },
+        "eu_member": { "type": "boolean" },
+        "eurozone": { "type": "boolean" },
+        "timezones": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "primary_timezone": { "type": ["string", "null"] }
+      }
+    },
+    "currency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "numeric", "name", "type", "minor_units", "symbol", "narrow_symbol", "cldr_digits", "cash_digits", "cash_rounding", "intl_number_format_digits", "countries", "other_users", "gateways"],
+      "properties": {
+        "code": { "$ref": "#/$defs/currencyCode" },
+        "numeric": { "$ref": "#/$defs/numeric3" },
+        "name": { "type": "string", "minLength": 1 },
+        "type": { "enum": ["currency", "fund", "precious_metal", "special_drawing_right", "regional_unit", "bond_market_unit", "testing", "no_currency"] },
+        "minor_units": { "type": ["integer", "null"], "minimum": 0, "maximum": 4 },
+        "symbol": { "type": ["string", "null"] },
+        "narrow_symbol": { "type": ["string", "null"] },
+        "cldr_digits": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "cash_digits": { "type": "integer", "minimum": 0, "maximum": 4 },
+        "cash_rounding": { "type": ["string", "null"], "pattern": "^[0-9]+(\\.[0-9]+)?$" },
+        "intl_number_format_digits": { "type": ["integer", "null"], "minimum": 0, "maximum": 4 },
+        "countries": { "type": "array", "items": { "$ref": "#/$defs/alpha2" }, "uniqueItems": true },
+        "other_users": { "type": "array", "items": { "type": "string" } },
+        "gateways": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["stripe_note", "stripe_minimum_charge", "adyen_decimals", "paypal_decimals", "paypal_in_country_only"],
+          "properties": {
+            "stripe_note": { "type": ["string", "null"] },
+            "stripe_minimum_charge": { "type": ["string", "null"], "pattern": "^[0-9]+(\\.[0-9]{2})?$" },
+            "adyen_decimals": { "type": ["integer", "null"], "minimum": 0, "maximum": 3 },
+            "paypal_decimals": { "type": ["integer", "null"], "minimum": 0, "maximum": 2 },
+            "paypal_in_country_only": { "type": ["boolean", "null"] }
+          }
+        }
+      }
+    }
+  }
+}

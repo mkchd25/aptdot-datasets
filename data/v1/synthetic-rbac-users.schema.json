@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.aptdot.com/data/v1/synthetic-rbac-users.schema.json",
+  "title": "Aptdot SyntheticRBACUsersDataset",
+  "type": "object",
+  "required": ["metadata", "roles", "resources", "users", "authorization_test_cases"],
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "required": [
+        "name",
+        "version",
+        "reference_time",
+        "generated_at",
+        "license",
+        "permission_grammar",
+        "wildcard_rules",
+        "resolution_precedence",
+        "dormancy_threshold_days",
+        "separation_of_duty_conflicts",
+        "total_users",
+        "total_roles",
+        "total_resources",
+        "total_test_cases",
+        "description"
+      ],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "reference_time": { "type": "string", "format": "date-time" },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "license": { "type": "string", "format": "uri" },
+        "permission_grammar": { "type": "string" },
+        "wildcard_rules": { "type": "object" },
+        "resolution_precedence": { "type": "array", "items": { "type": "string" } },
+        "dormancy_threshold_days": { "type": "integer" },
+        "separation_of_duty_conflicts": {
+          "type": "array",
+          "items": { "type": "array", "items": { "type": "string" } }
+        },
+        "total_users": { "type": "integer", "minimum": 1 },
+        "total_roles": { "type": "integer", "minimum": 1 },
+        "total_resources": { "type": "integer", "minimum": 1 },
+        "total_test_cases": { "type": "integer", "minimum": 1 },
+        "description": { "type": "string" }
+      }
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role", "inherits", "permissions", "description"],
+        "properties": {
+          "role": { "type": "string" },
+          "inherits": { "type": "array", "items": { "type": "string" } },
+          "permissions": { "type": "array", "items": { "type": "string" } },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "org_id", "type", "owner_id", "sensitivity", "data_residency"],
+        "properties": {
+          "id": { "type": "string" },
+          "org_id": { "type": "string" },
+          "workspace_id": { "type": ["string", "null"] },
+          "type": { "type": "string" },
+          "owner_id": { "type": "string" },
+          "sensitivity": { "type": "string", "enum": ["public", "internal", "confidential", "restricted", "critical"] },
+          "data_residency": { "type": "string" }
+        }
+      }
+    },
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "uuid",
+          "email",
+          "org_id",
+          "org_role",
+          "workspace_roles",
+          "effective_permissions",
+          "denied_permissions",
+          "status",
+          "employment_type",
+          "mfa",
+          "attributes",
+          "scenario_id"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "uuid": { "type": "string", "format": "uuid" },
+          "email": { "type": "string", "format": "email" },
+          "org_id": { "type": "string" },
+          "org_role": { "type": "string" },
+          "workspace_roles": { "type": "object" },
+          "effective_permissions": { "type": "array", "items": { "type": "string" } },
+          "denied_permissions": { "type": "array", "items": { "type": "string" } },
+          "status": { "type": "string", "enum": ["active", "suspended", "pending_invite", "deactivated"] },
+          "employment_type": { "type": "string", "enum": ["full_time", "contractor", "service_account"] },
+          "access_expires_at": { "type": ["string", "null"], "format": "date-time" },
+          "last_login_at": { "type": ["string", "null"], "format": "date-time" },
+          "mfa": {
+            "type": "object",
+            "required": ["enforced", "enrolled", "method"],
+            "properties": {
+              "enforced": { "type": "boolean" },
+              "enrolled": { "type": "boolean" },
+              "method": { "type": "string", "enum": ["none", "totp", "hardware_key", "sms"] }
+            }
+          },
+          "attributes": {
+            "type": "object",
+            "required": ["department", "geo_region", "ip_cidr", "network_trust", "device_posture", "risk_score"],
+            "properties": {
+              "department": { "type": "string" },
+              "geo_region": { "type": "string" },
+              "ip_cidr": { "type": "string" },
+              "network_trust": { "type": "string", "enum": ["corporate", "vpn", "public"] },
+              "device_posture": { "type": "string", "enum": ["managed_compliant", "byod_unmanaged", "server_hardened"] },
+              "risk_score": { "type": "integer", "minimum": 0, "maximum": 100 }
+            }
+          },
+          "scenario_id": { "type": "string" }
+        }
+      }
+    },
+    "authorization_test_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["case_id", "description", "principal", "action", "resource", "expected", "reason"],
+        "properties": {
+          "case_id": { "type": "string" },
+          "description": { "type": "string" },
+          "principal": { "type": "string" },
+          "action": { "type": "string" },
+          "resource": { "type": "string" },
+          "expected": { "type": "string", "enum": ["allow", "deny"] },
+          "reason": { "type": "string" }
+        }
+      }
+    }
+  }
+}

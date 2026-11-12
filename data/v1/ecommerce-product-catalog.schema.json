@@ -1,0 +1,216 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://www.aptdot.com/data/v1/ecommerce-product-catalog.schema.json",
+  "title": "Aptdot Synthetic E-Commerce Product Catalog",
+  "description": "Structure of the Aptdot synthetic 50-item e-commerce product catalog: products with options and variants, plus a flat one-row-per-variant view.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "metadata", "categories", "products", "variant_rows"],
+  "properties": {
+    "$schema": { "type": "string", "format": "uri" },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "date_modified", "license", "license_url", "schema", "source", "description", "total_products", "total_variants", "categories_count", "currency", "units", "conventions", "edge_cases"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "date_modified": { "type": "string", "format": "date" },
+        "license": { "const": "CC0-1.0" },
+        "license_url": { "type": "string", "format": "uri" },
+        "schema": { "type": "string", "format": "uri" },
+        "source": { "type": "string", "format": "uri" },
+        "description": { "type": "string", "minLength": 1 },
+        "total_products": { "type": "integer", "minimum": 1 },
+        "total_variants": { "type": "integer", "minimum": 1 },
+        "categories_count": { "type": "integer", "minimum": 1 },
+        "currency": { "$ref": "#/$defs/currency" },
+        "units": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["weight", "dimensions"],
+          "properties": {
+            "weight": { "const": "g" },
+            "dimensions": { "const": "cm" }
+          }
+        },
+        "conventions": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "edge_cases": {
+          "type": "object",
+          "description": "Product ids grouped by the test scenario they cover.",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/productId" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "categories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "slug", "sku_prefix", "product_count"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "slug": { "$ref": "#/$defs/slug" },
+          "sku_prefix": { "type": "string", "pattern": "^[A-Z]+-$" },
+          "product_count": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/product" }
+    },
+    "variant_rows": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/variantRow" }
+    }
+  },
+  "$defs": {
+    "productId": { "type": "string", "pattern": "^prod_\\d{3}$" },
+    "uuid7": {
+      "type": "string",
+      "description": "RFC 9562 UUID version 7, lowercase.",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "sku": { "type": "string", "pattern": "^[A-Z]+-[A-Z]+-\\d{3}(-[A-Z0-9]+)*$", "maxLength": 50 },
+    "slug": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "currency": { "type": "string", "pattern": "^[A-Z]{3}$", "description": "ISO 4217 alphabetic code." },
+    "money": { "type": "number", "minimum": 0, "description": "Decimal amount with at most 2 decimal places." },
+    "nullableMoney": { "type": ["number", "null"], "minimum": 0 },
+    "status": { "enum": ["active", "draft", "archived"] },
+    "availability": { "enum": ["in_stock", "out_of_stock", "preorder", "backorder"] },
+    "dateTime": { "type": "string", "format": "date-time", "pattern": "Z$" },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "uuid", "sku", "name", "slug", "brand", "description", "category", "product_type", "status", "tags", "options", "price", "compare_at_price", "cost_price", "currency", "in_stock", "inventory_quantity", "low_stock_threshold", "availability", "availability_date", "rating", "dimensions", "variants", "created_at", "updated_at"],
+      "properties": {
+        "id": { "$ref": "#/$defs/productId" },
+        "uuid": { "$ref": "#/$defs/uuid7" },
+        "sku": { "$ref": "#/$defs/sku" },
+        "name": { "type": "string", "minLength": 1, "maxLength": 150 },
+        "slug": { "$ref": "#/$defs/slug" },
+        "brand": { "type": "string", "minLength": 1, "maxLength": 70 },
+        "description": { "type": "string", "minLength": 1, "maxLength": 5000 },
+        "category": { "type": "string", "minLength": 1 },
+        "product_type": { "type": "string", "minLength": 1, "maxLength": 750 },
+        "status": { "$ref": "#/$defs/status" },
+        "tags": { "type": "array", "items": { "$ref": "#/$defs/slug" }, "uniqueItems": true },
+        "options": {
+          "type": "array",
+          "maxItems": 3,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "values"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "values": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+            }
+          }
+        },
+        "price": { "$ref": "#/$defs/money" },
+        "compare_at_price": { "$ref": "#/$defs/nullableMoney" },
+        "cost_price": { "$ref": "#/$defs/money" },
+        "currency": { "$ref": "#/$defs/currency" },
+        "in_stock": { "type": "boolean" },
+        "inventory_quantity": { "type": "integer", "minimum": 0 },
+        "low_stock_threshold": { "type": "integer", "minimum": 0 },
+        "availability": { "$ref": "#/$defs/availability" },
+        "availability_date": { "oneOf": [{ "$ref": "#/$defs/dateTime" }, { "type": "null" }] },
+        "rating": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["average", "review_count"],
+          "properties": {
+            "average": { "type": ["number", "null"], "minimum": 1, "maximum": 5 },
+            "review_count": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "dimensions": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["weight_g", "length_cm", "width_cm", "height_cm"],
+          "properties": {
+            "weight_g": { "type": "number", "exclusiveMinimum": 0 },
+            "length_cm": { "type": "number", "minimum": 1, "maximum": 3000 },
+            "width_cm": { "type": "number", "minimum": 1, "maximum": 3000 },
+            "height_cm": { "type": "number", "minimum": 1, "maximum": 3000 }
+          }
+        },
+        "variants": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["variant_id", "uuid", "sku", "title", "options", "price", "compare_at_price", "stock"],
+            "properties": {
+              "variant_id": { "type": "string", "pattern": "^var_\\d{3}_[a-z0-9_]+$" },
+              "uuid": { "$ref": "#/$defs/uuid7" },
+              "sku": { "$ref": "#/$defs/sku" },
+              "title": { "type": "string", "minLength": 1 },
+              "options": { "type": "object", "maxProperties": 3, "additionalProperties": { "type": "string" } },
+              "price": { "$ref": "#/$defs/money" },
+              "compare_at_price": { "$ref": "#/$defs/nullableMoney" },
+              "stock": { "type": "integer", "minimum": 0 }
+            }
+          }
+        },
+        "created_at": { "$ref": "#/$defs/dateTime" },
+        "updated_at": { "$ref": "#/$defs/dateTime" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "availability": { "const": "preorder" } } },
+          "then": { "properties": { "availability_date": { "$ref": "#/$defs/dateTime" } } },
+          "else": { "properties": { "availability_date": { "type": "null" } } }
+        }
+      ]
+    },
+    "variantRow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["product_id", "handle", "title", "variant_title", "sku", "parent_sku", "brand", "category", "product_type", "status", "tags", "option1_name", "option1_value", "option2_name", "option2_value", "option3_name", "option3_value", "price", "compare_at_price", "cost_price", "currency", "stock", "availability", "weight_g", "length_cm", "width_cm", "height_cm"],
+      "properties": {
+        "product_id": { "$ref": "#/$defs/productId" },
+        "handle": { "$ref": "#/$defs/slug" },
+        "title": { "type": "string" },
+        "variant_title": { "type": "string" },
+        "sku": { "$ref": "#/$defs/sku" },
+        "parent_sku": { "$ref": "#/$defs/sku" },
+        "brand": { "type": "string" },
+        "category": { "type": "string" },
+        "product_type": { "type": "string" },
+        "status": { "$ref": "#/$defs/status" },
+        "tags": { "type": "string" },
+        "option1_name": { "type": ["string", "null"] },
+        "option1_value": { "type": ["string", "null"] },
+        "option2_name": { "type": ["string", "null"] },
+        "option2_value": { "type": ["string", "null"] },
+        "option3_name": { "type": ["string", "null"] },
+        "option3_value": { "type": ["string", "null"] },
+        "price": { "$ref": "#/$defs/money" },
+        "compare_at_price": { "$ref": "#/$defs/nullableMoney" },
+        "cost_price": { "$ref": "#/$defs/money" },
+        "currency": { "$ref": "#/$defs/currency" },
+        "stock": { "type": "integer", "minimum": 0 },
+        "availability": { "$ref": "#/$defs/availability" },
+        "weight_g": { "type": "number" },
+        "length_cm": { "type": "number" },
+        "width_cm": { "type": "number" },
+        "height_cm": { "type": "number" }
+      }
+    }
+  }
+}

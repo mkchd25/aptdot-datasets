@@ -1,0 +1,801 @@
+{
+  "$schema": "https://www.aptdot.com/data/v1/cicd-pipeline-manifests.schema.json",
+  "metadata": {
+    "name": "CI/CD Pipeline & Cloud Manifest Templates",
+    "version": "1.0.0",
+    "date_modified": "2026-10-21",
+    "license": "CC0-1.0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "schema": "https://www.aptdot.com/data/v1/cicd-pipeline-manifests.schema.json",
+    "source": "https://www.aptdot.com/datasets/cicd-pipeline-manifests/",
+    "total_manifests": 6,
+    "versions_checked": {
+      "date": "2026-10-21",
+      "github_actions": {
+        "actions/checkout": "v7.0.1",
+        "actions/setup-node": "v7.1.0",
+        "docker/login-action": "v4.6.0",
+        "docker/setup-buildx-action": "v4.4.1",
+        "docker/metadata-action": "v6.2.0",
+        "docker/build-push-action": "v7.4.0"
+      },
+      "node_lts": [
+        "22",
+        "24"
+      ],
+      "docker": "29",
+      "postgres": "18",
+      "redis": "8",
+      "kubernetes_schema": "1.37"
+    },
+    "validation": {
+      "github_actions": "actionlint 1.7.9",
+      "gitlab_ci": "GitLab CI JSON Schema (check-jsonschema 0.38.2, vendor.gitlab-ci)",
+      "docker_compose": "Compose Specification JSON Schema (check-jsonschema 0.38.2, vendor.compose-spec)",
+      "kubernetes": "kubernetes-validate 1.37.0, strict mode, Kubernetes 1.37 schemas",
+      "aws_ecs": "botocore 1.43 RegisterTaskDefinition parameter validation"
+    },
+    "description": "Six copy-ready CI/CD and deployment templates (GitHub Actions CI, GitHub Actions container publishing, GitLab CI, Docker Compose, Kubernetes and AWS ECS Fargate), each stored as JSON and as ready-to-paste YAML or JSON, validated with each platform's own tooling and hardened with current security defaults."
+  },
+  "manifests": {
+    "github_actions_node_ci": {
+      "id": "gha-node-ci-01",
+      "platform": "GitHub Actions",
+      "format": "yaml",
+      "target_file": ".github/workflows/ci.yml",
+      "category": "Continuous integration",
+      "description": "Node.js test workflow across the two supported LTS lines (22 and 24) with npm caching, concurrency cancellation and a read-only token.",
+      "use_when": "You need CI for a Node.js repository on GitHub.",
+      "security_highlights": [
+        "Workflow token limited to contents: read.",
+        "Third-party actions pinned to full commit SHAs (version noted in a comment).",
+        "persist-credentials: false keeps the token out of the checked-out .git folder.",
+        "timeout-minutes stops hung jobs from using runner minutes."
+      ],
+      "customize": [
+        "Branch names under on:",
+        "Node versions in the matrix",
+        "npm scripts (npm test)"
+      ],
+      "documents": [
+        {
+          "name": "CI",
+          "on": {
+            "push": {
+              "branches": [
+                "main"
+              ]
+            },
+            "pull_request": {
+              "branches": [
+                "main"
+              ]
+            }
+          },
+          "permissions": {
+            "contents": "read"
+          },
+          "concurrency": {
+            "group": "${{ github.workflow }}-${{ github.ref }}",
+            "cancel-in-progress": true
+          },
+          "jobs": {
+            "test": {
+              "runs-on": "ubuntu-latest",
+              "timeout-minutes": 15,
+              "strategy": {
+                "fail-fast": false,
+                "matrix": {
+                  "node-version": [
+                    "22.x",
+                    "24.x"
+                  ]
+                }
+              },
+              "steps": [
+                {
+                  "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+                  "with": {
+                    "persist-credentials": false
+                  }
+                },
+                {
+                  "name": "Set up Node.js ${{ matrix.node-version }}",
+                  "uses": "actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1",
+                  "with": {
+                    "node-version": "${{ matrix.node-version }}",
+                    "cache": "npm"
+                  }
+                },
+                {
+                  "name": "Install dependencies",
+                  "run": "npm ci"
+                },
+                {
+                  "name": "Test",
+                  "run": "npm test"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "yaml": "name: CI\n'on':\n  push:\n    branches:\n    - main\n  pull_request:\n    branches:\n    - main\npermissions:\n  contents: read\nconcurrency:\n  group: ${{ github.workflow }}-${{ github.ref }}\n  cancel-in-progress: true\njobs:\n  test:\n    runs-on: ubuntu-latest\n    timeout-minutes: 15\n    strategy:\n      fail-fast: false\n      matrix:\n        node-version:\n        - 22.x\n        - 24.x\n    steps:\n    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\n      with:\n        persist-credentials: false\n    - name: Set up Node.js ${{ matrix.node-version }}\n      uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0\n      with:\n        node-version: ${{ matrix.node-version }}\n        cache: npm\n    - name: Install dependencies\n      run: npm ci\n    - name: Test\n      run: npm test\n"
+    },
+    "github_actions_docker_ghcr": {
+      "id": "gha-docker-ghcr-02",
+      "platform": "GitHub Actions",
+      "format": "yaml",
+      "target_file": ".github/workflows/publish-image.yml",
+      "category": "Continuous delivery",
+      "description": "Builds a container image with Buildx and pushes it to GitHub Container Registry with branch, semver and SHA tags, build cache, SBOM and provenance attestations.",
+      "use_when": "You publish a Docker image from a GitHub repository.",
+      "security_highlights": [
+        "Workflow default is contents: read; only the publish job gets packages: write.",
+        "Authenticates with the built-in GITHUB_TOKEN, no long-lived registry password.",
+        "Generates an SBOM and max-mode provenance attestation with the image.",
+        "Actions pinned to full commit SHAs."
+      ],
+      "customize": [
+        "Branch and tag patterns under on:",
+        "Build context and Dockerfile path"
+      ],
+      "documents": [
+        {
+          "name": "Publish container image",
+          "on": {
+            "push": {
+              "branches": [
+                "main"
+              ],
+              "tags": [
+                "v*.*.*"
+              ]
+            }
+          },
+          "permissions": {
+            "contents": "read"
+          },
+          "concurrency": {
+            "group": "${{ github.workflow }}-${{ github.ref }}",
+            "cancel-in-progress": false
+          },
+          "jobs": {
+            "publish": {
+              "runs-on": "ubuntu-latest",
+              "timeout-minutes": 30,
+              "permissions": {
+                "contents": "read",
+                "packages": "write"
+              },
+              "steps": [
+                {
+                  "uses": "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1",
+                  "with": {
+                    "persist-credentials": false
+                  }
+                },
+                {
+                  "name": "Set up Docker Buildx",
+                  "uses": "docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069"
+                },
+                {
+                  "name": "Log in to GitHub Container Registry",
+                  "uses": "docker/login-action@dbcb813823bdd20940b903addbd779551569679f",
+                  "with": {
+                    "registry": "ghcr.io",
+                    "username": "${{ github.actor }}",
+                    "password": "${{ secrets.GITHUB_TOKEN }}"
+                  }
+                },
+                {
+                  "name": "Generate image tags",
+                  "id": "meta",
+                  "uses": "docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302",
+                  "with": {
+                    "images": "ghcr.io/${{ github.repository }}",
+                    "tags": "type=ref,event=branch\ntype=semver,pattern={{version}}\ntype=sha"
+                  }
+                },
+                {
+                  "name": "Build and push",
+                  "uses": "docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc",
+                  "with": {
+                    "context": ".",
+                    "push": true,
+                    "tags": "${{ steps.meta.outputs.tags }}",
+                    "labels": "${{ steps.meta.outputs.labels }}",
+                    "cache-from": "type=gha",
+                    "cache-to": "type=gha,mode=max",
+                    "provenance": "mode=max",
+                    "sbom": true
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "yaml": "name: Publish container image\n'on':\n  push:\n    branches:\n    - main\n    tags:\n    - v*.*.*\npermissions:\n  contents: read\nconcurrency:\n  group: ${{ github.workflow }}-${{ github.ref }}\n  cancel-in-progress: false\njobs:\n  publish:\n    runs-on: ubuntu-latest\n    timeout-minutes: 30\n    permissions:\n      contents: read\n      packages: write\n    steps:\n    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1\n      with:\n        persist-credentials: false\n    - name: Set up Docker Buildx\n      uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1\n    - name: Log in to GitHub Container Registry\n      uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0\n      with:\n        registry: ghcr.io\n        username: ${{ github.actor }}\n        password: ${{ secrets.GITHUB_TOKEN }}\n    - name: Generate image tags\n      id: meta\n      uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302 # v6.2.0\n      with:\n        images: ghcr.io/${{ github.repository }}\n        tags: |-\n          type=ref,event=branch\n          type=semver,pattern={{version}}\n          type=sha\n    - name: Build and push\n      uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0\n      with:\n        context: .\n        push: true\n        tags: ${{ steps.meta.outputs.tags }}\n        labels: ${{ steps.meta.outputs.labels }}\n        cache-from: type=gha\n        cache-to: type=gha,mode=max\n        provenance: mode=max\n        sbom: true\n"
+    },
+    "gitlab_ci_multi_stage": {
+      "id": "gitlab-ci-stages-03",
+      "platform": "GitLab CI/CD",
+      "format": "yaml",
+      "target_file": ".gitlab-ci.yml",
+      "category": "Continuous integration & delivery",
+      "description": "Lint, test, build and deploy pipeline with GitLab SAST, npm caching keyed on the lockfile, JUnit reports, Docker-in-Docker image builds and a manual production deploy.",
+      "use_when": "You build and ship a Node.js service on GitLab.",
+      "security_highlights": [
+        "GitLab SAST template included (runs in the test stage).",
+        "Registry login uses --password-stdin, so the password never appears in the process list.",
+        "Production deploy is manual, limited to the default branch and serialized with resource_group.",
+        "Pipelines run only for merge requests and the default branch (workflow rules)."
+      ],
+      "customize": [
+        "deploy_production script",
+        "Environment URL",
+        "Docker images and Node version"
+      ],
+      "documents": [
+        {
+          "include": [
+            {
+              "template": "Jobs/SAST.gitlab-ci.yml"
+            }
+          ],
+          "stages": [
+            "lint",
+            "test",
+            "build",
+            "deploy"
+          ],
+          "workflow": {
+            "rules": [
+              {
+                "if": "$CI_PIPELINE_SOURCE == 'merge_request_event'"
+              },
+              {
+                "if": "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+              }
+            ]
+          },
+          "default": {
+            "image": "node:24-alpine",
+            "interruptible": true,
+            "cache": {
+              "key": {
+                "files": [
+                  "package-lock.json"
+                ]
+              },
+              "paths": [
+                ".npm/"
+              ]
+            },
+            "before_script": [
+              "npm ci --cache .npm --prefer-offline"
+            ]
+          },
+          "lint": {
+            "stage": "lint",
+            "script": [
+              "npm run lint"
+            ]
+          },
+          "unit_tests": {
+            "stage": "test",
+            "script": [
+              "npm test"
+            ],
+            "artifacts": {
+              "when": "always",
+              "reports": {
+                "junit": "junit.xml"
+              },
+              "expire_in": "7 days"
+            }
+          },
+          "build_image": {
+            "stage": "build",
+            "image": "docker:29",
+            "services": [
+              "docker:29-dind"
+            ],
+            "variables": {
+              "DOCKER_TLS_CERTDIR": "/certs"
+            },
+            "cache": [],
+            "before_script": [
+              "echo \"$CI_REGISTRY_PASSWORD\" | docker login \"$CI_REGISTRY\" -u \"$CI_REGISTRY_USER\" --password-stdin"
+            ],
+            "script": [
+              "docker build -t \"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA\" .",
+              "docker push \"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA\""
+            ],
+            "rules": [
+              {
+                "if": "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH"
+              }
+            ]
+          },
+          "deploy_production": {
+            "stage": "deploy",
+            "image": "alpine:3.24",
+            "cache": [],
+            "before_script": [],
+            "script": [
+              "echo \"Deploy $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA with your release tool here\""
+            ],
+            "environment": {
+              "name": "production",
+              "url": "https://app.example.com"
+            },
+            "resource_group": "production",
+            "interruptible": false,
+            "rules": [
+              {
+                "if": "$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH",
+                "when": "manual"
+              }
+            ]
+          }
+        }
+      ],
+      "yaml": "include:\n- template: Jobs/SAST.gitlab-ci.yml\nstages:\n- lint\n- test\n- build\n- deploy\nworkflow:\n  rules:\n  - if: $CI_PIPELINE_SOURCE == 'merge_request_event'\n  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\ndefault:\n  image: node:24-alpine\n  interruptible: true\n  cache:\n    key:\n      files:\n      - package-lock.json\n    paths:\n    - .npm/\n  before_script:\n  - npm ci --cache .npm --prefer-offline\nlint:\n  stage: lint\n  script:\n  - npm run lint\nunit_tests:\n  stage: test\n  script:\n  - npm test\n  artifacts:\n    when: always\n    reports:\n      junit: junit.xml\n    expire_in: 7 days\nbuild_image:\n  stage: build\n  image: docker:29\n  services:\n  - docker:29-dind\n  variables:\n    DOCKER_TLS_CERTDIR: /certs\n  cache: []\n  before_script:\n  - echo \"$CI_REGISTRY_PASSWORD\" | docker login \"$CI_REGISTRY\" -u \"$CI_REGISTRY_USER\" --password-stdin\n  script:\n  - docker build -t \"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA\" .\n  - docker push \"$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA\"\n  rules:\n  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\ndeploy_production:\n  stage: deploy\n  image: alpine:3.24\n  cache: []\n  before_script: []\n  script:\n  - echo \"Deploy $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA with your release tool here\"\n  environment:\n    name: production\n    url: https://app.example.com\n  resource_group: production\n  interruptible: false\n  rules:\n  - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH\n    when: manual\n"
+    },
+    "docker_compose_production": {
+      "id": "compose-3tier-04",
+      "platform": "Docker Compose",
+      "format": "yaml",
+      "target_file": "compose.yaml",
+      "category": "Container orchestration",
+      "description": "Web API, PostgreSQL 18 and Redis 8 with health-gated startup, Docker secrets, an internal-only backend network and persistent volumes.",
+      "use_when": "You run a small production or staging stack on a single host.",
+      "security_highlights": [
+        "API runs as a non-root user with a read-only root filesystem, all capabilities dropped and no-new-privileges.",
+        "Database password delivered as a Docker secret file, never as a plain environment variable.",
+        "Database and cache sit on an internal network with no outside access.",
+        "API port bound to 127.0.0.1 so it is only reachable through a reverse proxy on the host."
+      ],
+      "customize": [
+        "Image name and tag",
+        "Create ./secrets/db_password.txt before the first start",
+        "Published port"
+      ],
+      "documents": [
+        {
+          "name": "app",
+          "services": {
+            "web": {
+              "image": "registry.example.com/app:1.2.0",
+              "restart": "unless-stopped",
+              "user": "10001:10001",
+              "read_only": true,
+              "tmpfs": [
+                "/tmp"
+              ],
+              "security_opt": [
+                "no-new-privileges:true"
+              ],
+              "cap_drop": [
+                "ALL"
+              ],
+              "ports": [
+                "127.0.0.1:8080:8080"
+              ],
+              "environment": {
+                "NODE_ENV": "production",
+                "DATABASE_HOST": "db",
+                "DATABASE_NAME": "app_prod",
+                "DATABASE_USER": "app_user",
+                "DATABASE_PASSWORD_FILE": "/run/secrets/db_password",
+                "REDIS_URL": "redis://cache:6379"
+              },
+              "secrets": [
+                "db_password"
+              ],
+              "depends_on": {
+                "db": {
+                  "condition": "service_healthy"
+                },
+                "cache": {
+                  "condition": "service_healthy"
+                }
+              },
+              "deploy": {
+                "resources": {
+                  "limits": {
+                    "cpus": "1.5",
+                    "memory": "1024M"
+                  }
+                }
+              },
+              "networks": [
+                "frontend",
+                "backend"
+              ]
+            },
+            "db": {
+              "image": "postgres:18-alpine",
+              "restart": "unless-stopped",
+              "environment": {
+                "POSTGRES_DB": "app_prod",
+                "POSTGRES_USER": "app_user",
+                "POSTGRES_PASSWORD_FILE": "/run/secrets/db_password"
+              },
+              "secrets": [
+                "db_password"
+              ],
+              "volumes": [
+                "db_data:/var/lib/postgresql"
+              ],
+              "healthcheck": {
+                "test": [
+                  "CMD-SHELL",
+                  "pg_isready -U app_user -d app_prod"
+                ],
+                "interval": "10s",
+                "timeout": "5s",
+                "retries": 5,
+                "start_period": "20s"
+              },
+              "networks": [
+                "backend"
+              ]
+            },
+            "cache": {
+              "image": "redis:8-alpine",
+              "restart": "unless-stopped",
+              "command": [
+                "redis-server",
+                "--appendonly",
+                "yes"
+              ],
+              "volumes": [
+                "cache_data:/data"
+              ],
+              "healthcheck": {
+                "test": [
+                  "CMD",
+                  "redis-cli",
+                  "ping"
+                ],
+                "interval": "10s",
+                "timeout": "3s",
+                "retries": 5
+              },
+              "networks": [
+                "backend"
+              ]
+            }
+          },
+          "networks": {
+            "frontend": {},
+            "backend": {
+              "internal": true
+            }
+          },
+          "volumes": {
+            "db_data": {},
+            "cache_data": {}
+          },
+          "secrets": {
+            "db_password": {
+              "file": "./secrets/db_password.txt"
+            }
+          }
+        }
+      ],
+      "yaml": "name: app\nservices:\n  web:\n    image: registry.example.com/app:1.2.0\n    restart: unless-stopped\n    user: 10001:10001\n    read_only: true\n    tmpfs:\n    - /tmp\n    security_opt:\n    - no-new-privileges:true\n    cap_drop:\n    - ALL\n    ports:\n    - 127.0.0.1:8080:8080\n    environment:\n      NODE_ENV: production\n      DATABASE_HOST: db\n      DATABASE_NAME: app_prod\n      DATABASE_USER: app_user\n      DATABASE_PASSWORD_FILE: /run/secrets/db_password\n      REDIS_URL: redis://cache:6379\n    secrets:\n    - db_password\n    depends_on:\n      db:\n        condition: service_healthy\n      cache:\n        condition: service_healthy\n    deploy:\n      resources:\n        limits:\n          cpus: '1.5'\n          memory: 1024M\n    networks:\n    - frontend\n    - backend\n  db:\n    image: postgres:18-alpine\n    restart: unless-stopped\n    environment:\n      POSTGRES_DB: app_prod\n      POSTGRES_USER: app_user\n      POSTGRES_PASSWORD_FILE: /run/secrets/db_password\n    secrets:\n    - db_password\n    volumes:\n    - db_data:/var/lib/postgresql\n    healthcheck:\n      test:\n      - CMD-SHELL\n      - pg_isready -U app_user -d app_prod\n      interval: 10s\n      timeout: 5s\n      retries: 5\n      start_period: 20s\n    networks:\n    - backend\n  cache:\n    image: redis:8-alpine\n    restart: unless-stopped\n    command:\n    - redis-server\n    - --appendonly\n    - 'yes'\n    volumes:\n    - cache_data:/data\n    healthcheck:\n      test:\n      - CMD\n      - redis-cli\n      - ping\n      interval: 10s\n      timeout: 3s\n      retries: 5\n    networks:\n    - backend\nnetworks:\n  frontend: {}\n  backend:\n    internal: true\nvolumes:\n  db_data: {}\n  cache_data: {}\nsecrets:\n  db_password:\n    file: ./secrets/db_password.txt\n"
+    },
+    "kubernetes_zero_downtime": {
+      "id": "k8s-zero-downtime-05",
+      "platform": "Kubernetes",
+      "format": "yaml",
+      "target_file": "api.yaml",
+      "category": "Cloud orchestration",
+      "description": "Deployment, Service, PodDisruptionBudget and HorizontalPodAutoscaler for a stateless HTTP API, meeting the Pod Security Standards restricted profile.",
+      "use_when": "You deploy a stateless web service to Kubernetes 1.33 or newer.",
+      "security_highlights": [
+        "Meets the restricted Pod Security Standard: non-root, no privilege escalation, all capabilities dropped, RuntimeDefault seccomp.",
+        "Read-only root filesystem with a size-limited emptyDir for /tmp.",
+        "Service account token not mounted (the API does not call the Kubernetes API).",
+        "Zero downtime: maxUnavailable 0, readiness probe, preStop sleep for endpoint removal and a PodDisruptionBudget for node drains."
+      ],
+      "customize": [
+        "Image",
+        "Probe paths (/healthz, /readyz)",
+        "Replica counts and CPU target"
+      ],
+      "documents": [
+        {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "metadata": {
+            "name": "api",
+            "labels": {
+              "app.kubernetes.io/name": "api",
+              "app.kubernetes.io/part-of": "example-app"
+            }
+          },
+          "spec": {
+            "replicas": 3,
+            "revisionHistoryLimit": 5,
+            "strategy": {
+              "type": "RollingUpdate",
+              "rollingUpdate": {
+                "maxSurge": "25%",
+                "maxUnavailable": 0
+              }
+            },
+            "selector": {
+              "matchLabels": {
+                "app.kubernetes.io/name": "api",
+                "app.kubernetes.io/part-of": "example-app"
+              }
+            },
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app.kubernetes.io/name": "api",
+                  "app.kubernetes.io/part-of": "example-app"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "terminationGracePeriodSeconds": 30,
+                "securityContext": {
+                  "runAsNonRoot": true,
+                  "runAsUser": 10001,
+                  "runAsGroup": 10001,
+                  "fsGroup": 10001,
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "containers": [
+                  {
+                    "name": "api",
+                    "image": "registry.example.com/app:1.2.0",
+                    "ports": [
+                      {
+                        "name": "http",
+                        "containerPort": 8080
+                      }
+                    ],
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "readOnlyRootFilesystem": true,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      }
+                    },
+                    "resources": {
+                      "requests": {
+                        "cpu": "250m",
+                        "memory": "256Mi"
+                      },
+                      "limits": {
+                        "memory": "512Mi"
+                      }
+                    },
+                    "startupProbe": {
+                      "httpGet": {
+                        "path": "/healthz",
+                        "port": "http"
+                      },
+                      "periodSeconds": 5,
+                      "failureThreshold": 24
+                    },
+                    "readinessProbe": {
+                      "httpGet": {
+                        "path": "/readyz",
+                        "port": "http"
+                      },
+                      "periodSeconds": 5
+                    },
+                    "livenessProbe": {
+                      "httpGet": {
+                        "path": "/healthz",
+                        "port": "http"
+                      },
+                      "periodSeconds": 20,
+                      "failureThreshold": 3
+                    },
+                    "lifecycle": {
+                      "preStop": {
+                        "sleep": {
+                          "seconds": 5
+                        }
+                      }
+                    },
+                    "volumeMounts": [
+                      {
+                        "name": "tmp",
+                        "mountPath": "/tmp"
+                      }
+                    ]
+                  }
+                ],
+                "volumes": [
+                  {
+                    "name": "tmp",
+                    "emptyDir": {
+                      "sizeLimit": "64Mi"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        {
+          "apiVersion": "v1",
+          "kind": "Service",
+          "metadata": {
+            "name": "api",
+            "labels": {
+              "app.kubernetes.io/name": "api",
+              "app.kubernetes.io/part-of": "example-app"
+            }
+          },
+          "spec": {
+            "selector": {
+              "app.kubernetes.io/name": "api",
+              "app.kubernetes.io/part-of": "example-app"
+            },
+            "ports": [
+              {
+                "name": "http",
+                "port": 80,
+                "targetPort": "http"
+              }
+            ]
+          }
+        },
+        {
+          "apiVersion": "policy/v1",
+          "kind": "PodDisruptionBudget",
+          "metadata": {
+            "name": "api",
+            "labels": {
+              "app.kubernetes.io/name": "api",
+              "app.kubernetes.io/part-of": "example-app"
+            }
+          },
+          "spec": {
+            "minAvailable": 2,
+            "selector": {
+              "matchLabels": {
+                "app.kubernetes.io/name": "api",
+                "app.kubernetes.io/part-of": "example-app"
+              }
+            }
+          }
+        },
+        {
+          "apiVersion": "autoscaling/v2",
+          "kind": "HorizontalPodAutoscaler",
+          "metadata": {
+            "name": "api",
+            "labels": {
+              "app.kubernetes.io/name": "api",
+              "app.kubernetes.io/part-of": "example-app"
+            }
+          },
+          "spec": {
+            "scaleTargetRef": {
+              "apiVersion": "apps/v1",
+              "kind": "Deployment",
+              "name": "api"
+            },
+            "minReplicas": 3,
+            "maxReplicas": 10,
+            "metrics": [
+              {
+                "type": "Resource",
+                "resource": {
+                  "name": "cpu",
+                  "target": {
+                    "type": "Utilization",
+                    "averageUtilization": 70
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "yaml": "apiVersion: apps/v1\nkind: Deployment\nmetadata:\n  name: api\n  labels:\n    app.kubernetes.io/name: api\n    app.kubernetes.io/part-of: example-app\nspec:\n  replicas: 3\n  revisionHistoryLimit: 5\n  strategy:\n    type: RollingUpdate\n    rollingUpdate:\n      maxSurge: 25%\n      maxUnavailable: 0\n  selector:\n    matchLabels:\n      app.kubernetes.io/name: api\n      app.kubernetes.io/part-of: example-app\n  template:\n    metadata:\n      labels:\n        app.kubernetes.io/name: api\n        app.kubernetes.io/part-of: example-app\n    spec:\n      automountServiceAccountToken: false\n      terminationGracePeriodSeconds: 30\n      securityContext:\n        runAsNonRoot: true\n        runAsUser: 10001\n        runAsGroup: 10001\n        fsGroup: 10001\n        seccompProfile:\n          type: RuntimeDefault\n      containers:\n      - name: api\n        image: registry.example.com/app:1.2.0\n        ports:\n        - name: http\n          containerPort: 8080\n        securityContext:\n          allowPrivilegeEscalation: false\n          readOnlyRootFilesystem: true\n          capabilities:\n            drop:\n            - ALL\n        resources:\n          requests:\n            cpu: 250m\n            memory: 256Mi\n          limits:\n            memory: 512Mi\n        startupProbe:\n          httpGet:\n            path: /healthz\n            port: http\n          periodSeconds: 5\n          failureThreshold: 24\n        readinessProbe:\n          httpGet:\n            path: /readyz\n            port: http\n          periodSeconds: 5\n        livenessProbe:\n          httpGet:\n            path: /healthz\n            port: http\n          periodSeconds: 20\n          failureThreshold: 3\n        lifecycle:\n          preStop:\n            sleep:\n              seconds: 5\n        volumeMounts:\n        - name: tmp\n          mountPath: /tmp\n      volumes:\n      - name: tmp\n        emptyDir:\n          sizeLimit: 64Mi\n---\napiVersion: v1\nkind: Service\nmetadata:\n  name: api\n  labels:\n    app.kubernetes.io/name: api\n    app.kubernetes.io/part-of: example-app\nspec:\n  selector:\n    app.kubernetes.io/name: api\n    app.kubernetes.io/part-of: example-app\n  ports:\n  - name: http\n    port: 80\n    targetPort: http\n---\napiVersion: policy/v1\nkind: PodDisruptionBudget\nmetadata:\n  name: api\n  labels:\n    app.kubernetes.io/name: api\n    app.kubernetes.io/part-of: example-app\nspec:\n  minAvailable: 2\n  selector:\n    matchLabels:\n      app.kubernetes.io/name: api\n      app.kubernetes.io/part-of: example-app\n---\napiVersion: autoscaling/v2\nkind: HorizontalPodAutoscaler\nmetadata:\n  name: api\n  labels:\n    app.kubernetes.io/name: api\n    app.kubernetes.io/part-of: example-app\nspec:\n  scaleTargetRef:\n    apiVersion: apps/v1\n    kind: Deployment\n    name: api\n  minReplicas: 3\n  maxReplicas: 10\n  metrics:\n  - type: Resource\n    resource:\n      name: cpu\n      target:\n        type: Utilization\n        averageUtilization: 70\n"
+    },
+    "aws_ecs_fargate_task": {
+      "id": "ecs-fargate-task-06",
+      "platform": "AWS ECS Fargate",
+      "format": "json",
+      "target_file": "task-definition.json",
+      "category": "Serverless containers",
+      "description": "Fargate task definition with separate execution and task roles, a single key pulled from AWS Secrets Manager, CloudWatch Logs and a read-only root filesystem.",
+      "use_when": "You run a container service on ECS Fargate.",
+      "security_highlights": [
+        "Execution role (image pull, secrets, logs) separated from the task role used by your code.",
+        "Pulls one JSON key from Secrets Manager instead of the whole secret.",
+        "Runs as a non-root user with a read-only root filesystem and a writable /tmp volume.",
+        "Image pinned to a version tag instead of latest."
+      ],
+      "customize": [
+        "Account ID, region and role names",
+        "Secret ARN and key",
+        "CPU and memory"
+      ],
+      "documents": [
+        {
+          "family": "example-api",
+          "networkMode": "awsvpc",
+          "requiresCompatibilities": [
+            "FARGATE"
+          ],
+          "runtimePlatform": {
+            "operatingSystemFamily": "LINUX",
+            "cpuArchitecture": "X86_64"
+          },
+          "cpu": "512",
+          "memory": "1024",
+          "executionRoleArn": "arn:aws:iam::123456789012:role/example-api-execution-role",
+          "taskRoleArn": "arn:aws:iam::123456789012:role/example-api-task-role",
+          "containerDefinitions": [
+            {
+              "name": "api",
+              "image": "123456789012.dkr.ecr.us-east-1.amazonaws.com/example-api:1.2.0",
+              "essential": true,
+              "user": "10001",
+              "readonlyRootFilesystem": true,
+              "portMappings": [
+                {
+                  "containerPort": 8080,
+                  "protocol": "tcp",
+                  "name": "http"
+                }
+              ],
+              "environment": [
+                {
+                  "name": "NODE_ENV",
+                  "value": "production"
+                }
+              ],
+              "secrets": [
+                {
+                  "name": "DATABASE_PASSWORD",
+                  "valueFrom": "arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/example-api/db:password::"
+                }
+              ],
+              "mountPoints": [
+                {
+                  "sourceVolume": "tmp",
+                  "containerPath": "/tmp",
+                  "readOnly": false
+                }
+              ],
+              "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                  "awslogs-group": "/ecs/example-api",
+                  "awslogs-region": "us-east-1",
+                  "awslogs-stream-prefix": "api"
+                }
+              }
+            }
+          ],
+          "volumes": [
+            {
+              "name": "tmp"
+            }
+          ]
+        }
+      ],
+      "json": "{\n  \"family\": \"example-api\",\n  \"networkMode\": \"awsvpc\",\n  \"requiresCompatibilities\": [\n    \"FARGATE\"\n  ],\n  \"runtimePlatform\": {\n    \"operatingSystemFamily\": \"LINUX\",\n    \"cpuArchitecture\": \"X86_64\"\n  },\n  \"cpu\": \"512\",\n  \"memory\": \"1024\",\n  \"executionRoleArn\": \"arn:aws:iam::123456789012:role/example-api-execution-role\",\n  \"taskRoleArn\": \"arn:aws:iam::123456789012:role/example-api-task-role\",\n  \"containerDefinitions\": [\n    {\n      \"name\": \"api\",\n      \"image\": \"123456789012.dkr.ecr.us-east-1.amazonaws.com/example-api:1.2.0\",\n      \"essential\": true,\n      \"user\": \"10001\",\n      \"readonlyRootFilesystem\": true,\n      \"portMappings\": [\n        {\n          \"containerPort\": 8080,\n          \"protocol\": \"tcp\",\n          \"name\": \"http\"\n        }\n      ],\n      \"environment\": [\n        {\n          \"name\": \"NODE_ENV\",\n          \"value\": \"production\"\n        }\n      ],\n      \"secrets\": [\n        {\n          \"name\": \"DATABASE_PASSWORD\",\n          \"valueFrom\": \"arn:aws:secretsmanager:us-east-1:123456789012:secret:prod/example-api/db:password::\"\n        }\n      ],\n      \"mountPoints\": [\n        {\n          \"sourceVolume\": \"tmp\",\n          \"containerPath\": \"/tmp\",\n          \"readOnly\": false\n        }\n      ],\n      \"logConfiguration\": {\n        \"logDriver\": \"awslogs\",\n        \"options\": {\n          \"awslogs-group\": \"/ecs/example-api\",\n          \"awslogs-region\": \"us-east-1\",\n          \"awslogs-stream-prefix\": \"api\"\n        }\n      }\n    }\n  ],\n  \"volumes\": [\n    {\n      \"name\": \"tmp\"\n    }\n  ]\n}\n"
+    }
+  }
+}

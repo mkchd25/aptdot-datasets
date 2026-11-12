@@ -1,0 +1,163 @@
+{
+  "$schema": "https://www.aptdot.com/data/v1/mcp-server-configs.schema.json",
+  "metadata": {
+    "name": "Model Context Protocol (MCP) Server Configuration Fixtures",
+    "version": "1.0.2",
+    "generated_at": "2026-09-30T06:00:00.000Z",
+    "license": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "target_protocol": "Model Context Protocol (MCP) Specification (Streamable HTTP Revision)",
+    "total_servers": 8,
+    "description": "Production-tested, schema-validated MCP server configuration dictionaries for Claude Desktop, Cursor, and VS Code AI agent runtimes."
+  },
+  "client_config_paths": {
+    "claude_desktop": {
+      "macos": "~/Library/Application Support/Claude/claude_desktop_config.json",
+      "windows": "%APPDATA%\\Claude\\claude_desktop_config.json",
+      "linux": "~/.config/Claude/claude_desktop_config.json"
+    },
+    "cursor": {
+      "workspace": ".cursor/mcp.json",
+      "global": "~/.cursor/mcp.json"
+    },
+    "vscode": {
+      "workspace": ".vscode/mcp.json",
+      "settings": "User Settings -> mcp.servers"
+    }
+  },
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/directory"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/modelcontextprotocol/servers/tree/main/src/filesystem",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": false
+      },
+      "description": "Enables read/write access to explicitly sandboxed local directory trees.",
+      "security_scope": "Directory-level path sandboxing (must specify absolute directory paths)",
+      "common_pitfalls": "Omitting the directory argument causes immediate process termination. On Windows, use forward slashes (e.g., C:/Projects) or double-escaped backslashes to prevent JSON parse errors.",
+      "env": {}
+    },
+    "github": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "GITHUB_PERSONAL_ACCESS_TOKEN", "ghcr.io/github/github-mcp-server"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/github/github-mcp-server",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": true
+      },
+      "description": "Official GitHub-maintained Go runner for issues, PRs, repository inspection, and commits.",
+      "security_scope": "Fine-grained Personal Access Token (PAT) with repo and read:org permissions",
+      "common_pitfalls": "Requires Docker daemon running locally. If running without Docker, download the official github-mcp-server standalone binary and replace command with the binary path. ${GITHUB_TOKEN} is a placeholder: Claude Desktop does not expand ${VAR} references in env values, so paste the real token (or use your client's own variable syntax, e.g. ${env:GITHUB_TOKEN} in Cursor and VS Code).",
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "postgres": {
+      "command": "docker",
+      "args": ["run", "-i", "--rm", "-e", "DATABASE_URI", "crystaldba/postgres-mcp", "--access-mode=restricted"],
+      "transport": "stdio",
+      "maintenance_status": "community_maintained",
+      "upstream_repo": "https://github.com/crystaldba/postgres-mcp",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": false
+      },
+      "description": "Hardened PostgreSQL server with schema inspection, query explanation, and read-only sandboxing.",
+      "security_scope": "Database credentials (enforce --access-mode=restricted to block DDL/DML mutation)",
+      "common_pitfalls": "The archived @modelcontextprotocol/server-postgres has unpatched SQL injection risks; use crystaldba/postgres-mcp instead. Notice the env key is DATABASE_URI, not DATABASE_URL.",
+      "env": {
+        "DATABASE_URI": "postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_NAME}?sslmode=require"
+      }
+    },
+    "brave_search": {
+      "command": "npx",
+      "args": ["-y", "@brave/brave-search-mcp-server"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/brave/brave-search-mcp-server",
+      "capabilities": {
+        "tools": true,
+        "resources": false,
+        "prompts": false
+      },
+      "description": "Official Brave Search integration for real-time web querying and document discovery.",
+      "security_scope": "Brave Data API subscription key",
+      "common_pitfalls": "Package migrated from @modelcontextprotocol scope to @brave scope. Missing BRAVE_API_KEY will result in 401 Unauthorized API rejections.",
+      "env": {
+        "BRAVE_API_KEY": "${BRAVE_API_KEY}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/microsoft/playwright-mcp",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": false
+      },
+      "description": "Official Microsoft-maintained headless and headed browser automation runner.",
+      "security_scope": "Local Chromium/WebKit execution sandbox",
+      "common_pitfalls": "Spawns a visible browser window by default. For background automated runs, pass --headless in args. Requires Node.js 18+.",
+      "env": {}
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/modelcontextprotocol/servers/tree/main/src/fetch",
+      "capabilities": {
+        "tools": true,
+        "resources": false,
+        "prompts": false
+      },
+      "description": "Web scraping and API querying tool with automatic HTML-to-Markdown parsing.",
+      "security_scope": "Outbound HTTP requests (ensure SSRF policies protect internal cloud subnets)",
+      "common_pitfalls": "Requires Python 3.10+ and uv installed. If Python is not available, run the official Docker image instead: command \"docker\", args [\"run\", \"-i\", \"--rm\", \"mcp/fetch\"]. There is no official npm package for this server.",
+      "env": {}
+    },
+    "git": {
+      "command": "uvx",
+      "args": ["mcp-server-git", "--repository", "/path/to/git/repo"],
+      "transport": "stdio",
+      "maintenance_status": "actively_maintained",
+      "upstream_repo": "https://github.com/modelcontextprotocol/servers/tree/main/src/git",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": false
+      },
+      "description": "Local repository inspection for diffs, log traces, branch operations, and staging.",
+      "security_scope": "Read/write git repository execution",
+      "common_pitfalls": "Target directory must already be initialized with git (git init) and contain at least one committed tree.",
+      "env": {}
+    },
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-sqlite-npx", "/path/to/database.db"],
+      "transport": "stdio",
+      "maintenance_status": "community_maintained",
+      "upstream_repo": "https://github.com/johnnyoshika/mcp-server-sqlite-npx",
+      "capabilities": {
+        "tools": true,
+        "resources": true,
+        "prompts": false
+      },
+      "description": "Node.js reimplementation of the archived official Python SQLite server, optimized for environments without a local uvx/Python toolchain.",
+      "security_scope": "Direct local SQLite database file access",
+      "common_pitfalls": "No single vendor-blessed successor exists for SQLite the way GitHub or Microsoft maintain their packages. This is a verified community option; confirm path write permissions prior to initialization.",
+      "env": {}
+    }
+  }
+}

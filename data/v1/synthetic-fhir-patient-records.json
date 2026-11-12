@@ -1,0 +1,595 @@
+{
+  "resourceType": "Bundle",
+  "id": "bundle-synthetic-fhir-r4-patients",
+  "meta": {
+    "versionId": "1.0.2",
+    "lastUpdated": "2026-10-04T16:00:00Z",
+    "profile": [
+      "http://hl7.org/fhir/StructureDefinition/Bundle"
+    ]
+  },
+  "type": "collection",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:6c1f8a20-3b4e-4f7d-8e9a-1b2c3d4e5f01",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-001",
+        "meta": {
+          "profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"]
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2106-3",
+                  "display": "White"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "White"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2186-5",
+                  "display": "Not Hispanic or Latino"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Not Hispanic or Latino"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "MR",
+                  "display": "Medical Record Number"
+                }
+              ]
+            },
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-001"
+          },
+          {
+            "use": "official",
+            "type": {
+              "coding": [
+                {
+                  "system": "http://terminology.hl7.org/CodeSystem/v2-0203",
+                  "code": "SS",
+                  "display": "Social Security Number"
+                }
+              ]
+            },
+            "system": "http://hl7.org/fhir/sid/us-ssn",
+            "value": "000-12-3456"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Miller",
+            "given": ["James", "Robert"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-0101",
+            "use": "home"
+          },
+          {
+            "system": "email",
+            "value": "james.miller@example.com",
+            "use": "home"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1980-04-12",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["124 Healthcare Way"],
+            "city": "Boston",
+            "state": "MA",
+            "postalCode": "02115",
+            "country": "USA"
+          }
+        ],
+        "maritalStatus": {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/v3-MaritalStatus",
+              "code": "M",
+              "display": "Married"
+            }
+          ]
+        },
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "en",
+                  "display": "English"
+                }
+              ]
+            },
+            "preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:7d2a9b31-4c5f-4a8e-9f0b-2c3d4e5f6a02",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-002",
+        "meta": {
+          "profile": ["http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient"]
+        },
+        "extension": [
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-race",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2106-3",
+                  "display": "White"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "White"
+              }
+            ]
+          },
+          {
+            "url": "http://hl7.org/fhir/us/core/StructureDefinition/us-core-ethnicity",
+            "extension": [
+              {
+                "url": "ombCategory",
+                "valueCoding": {
+                  "system": "urn:oid:2.16.840.1.113883.6.238",
+                  "code": "2135-2",
+                  "display": "Hispanic or Latino"
+                }
+              },
+              {
+                "url": "text",
+                "valueString": "Hispanic or Latino"
+              }
+            ]
+          }
+        ],
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-002"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Garcia",
+            "given": ["Sofia", "Elena"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-0102",
+            "use": "mobile"
+          },
+          {
+            "system": "email",
+            "value": "sofia.garcia@example.com",
+            "use": "home"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1994-09-23",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["458 Innovation Blvd", "Apt 3B"],
+            "city": "Austin",
+            "state": "TX",
+            "postalCode": "78701",
+            "country": "USA"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "es-US",
+                  "display": "Spanish (United States)"
+                }
+              ]
+            },
+            "preferred": true
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:8e3b0c42-5d6a-4b9f-a01c-3d4e5f6a7b03",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-003",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-003"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Chen",
+            "given": ["Lucas"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2024-03-15",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["782 Pediatric Lane"],
+            "city": "Seattle",
+            "state": "WA",
+            "postalCode": "98101",
+            "country": "USA"
+          }
+        ],
+        "contact": [
+          {
+            "relationship": [
+              {
+                "coding": [
+                  {
+                    "system": "http://terminology.hl7.org/CodeSystem/v2-0131",
+                    "code": "MTH",
+                    "display": "Mother"
+                  }
+                ]
+              }
+            ],
+            "name": {
+              "use": "official",
+              "family": "Chen",
+              "given": ["Mei"]
+            },
+            "telecom": [
+              {
+                "system": "phone",
+                "value": "555-0103",
+                "use": "mobile"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:9f4c1d53-6e7b-4c0a-b12d-4e5f6a7b8c04",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-004",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-004"
+          }
+        ],
+        "active": false,
+        "name": [
+          {
+            "use": "official",
+            "family": "O'Connor",
+            "given": ["Harold", "Patrick"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1942-11-05",
+        "deceasedDateTime": "2026-02-18T14:30:00Z",
+        "address": [
+          {
+            "use": "home",
+            "line": ["910 Memorial Drive"],
+            "city": "Chicago",
+            "state": "IL",
+            "postalCode": "60601",
+            "country": "USA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:0a5d2e64-7f8c-4d1b-823e-5f6a7b8c9d05",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-005",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-005"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Patel",
+            "given": ["Amina"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-0105",
+            "use": "mobile"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1988-06-19",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["302 Research Parkway"],
+            "city": "Durham",
+            "state": "NC",
+            "postalCode": "27708",
+            "country": "USA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:1b6e3f75-8a9d-4e2c-934f-6a7b8c9d0e06",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-006",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-006"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Taylor",
+            "given": ["Jordan", "Alex"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "email",
+            "value": "jordan.taylor@example.com",
+            "use": "work"
+          }
+        ],
+        "gender": "other",
+        "birthDate": "1997-01-30",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["501 Pine Street"],
+            "city": "Portland",
+            "state": "OR",
+            "postalCode": "97201",
+            "country": "USA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:2c7f4a86-9b0e-4f3d-a45a-7b8c9d0e1f07",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-007",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-007"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Dubois",
+            "given": ["Camille"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-0107",
+            "use": "home"
+          }
+        ],
+        "gender": "female",
+        "birthDate": "1973-12-14",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["812 Lakefront Avenue"],
+            "city": "Burlington",
+            "state": "VT",
+            "postalCode": "05401",
+            "country": "USA"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "fr",
+                  "display": "French"
+                }
+              ]
+            },
+            "preferred": false
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:3d8a5b97-0c1f-4a4e-b56b-8c9d0e1f2a08",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-008",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-008"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Kowalski",
+            "given": ["Stanislaus"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1958-07-08",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["643 Industrial Highway"],
+            "city": "Pittsburgh",
+            "state": "PA",
+            "postalCode": "15201",
+            "country": "USA"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:4e9b6c08-1d2a-4b5f-a67c-9d0e1f2a3b09",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-009",
+        "identifier": [
+          {
+            "use": "temp",
+            "system": "http://hospital.example.org/trauma-id",
+            "value": "TRAUMA-2026-904"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "temp",
+            "family": "Doe",
+            "given": ["John"]
+          }
+        ],
+        "gender": "unknown",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "temp",
+            "text": "Emergency Department Admission"
+          }
+        ]
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:5f0c7d19-2e3b-4c6a-b78d-0e1f2a3b4c10",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "pat-010",
+        "identifier": [
+          {
+            "use": "usual",
+            "system": "http://hospital.example.org/patients",
+            "value": "MRN-2026-010"
+          }
+        ],
+        "active": true,
+        "name": [
+          {
+            "use": "official",
+            "family": "Nakamura",
+            "given": ["Kenji"]
+          }
+        ],
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "555-0110",
+            "use": "mobile"
+          },
+          {
+            "system": "email",
+            "value": "kenji.nakamura@example.com",
+            "use": "home"
+          }
+        ],
+        "gender": "male",
+        "birthDate": "2001-10-04",
+        "deceasedBoolean": false,
+        "address": [
+          {
+            "use": "home",
+            "line": ["219 Tech Valley Drive"],
+            "city": "San Jose",
+            "state": "CA",
+            "postalCode": "95110",
+            "country": "USA"
+          }
+        ]
+      }
+    }
+  ]
+}
